@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showkey · CS2 准星工坊</title>
+<meta name="description" content="CS2 准星生成器与职业选手准星库：实时预览、分享码/CFG 互转、31 支战队现役选手准星。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff7a18'/><path d='M50 24v11M50 65v11M24 50h11M65 50h11' stroke='%23100a02' stroke-width='10' stroke-linecap='round'/><circle cx='50' cy='50' r='5' fill='%23100a02'/></svg>">
+<link rel="stylesheet" href="css/style.css?v=18">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#" onclick="return false">
+      <span class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5v3.5M12 17v3.5M3.5 12H7M17 12h3.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-name">SHOWKEY<small>CS2 准星工坊</small></span>
+    </a>
+    <nav class="tabs" id="viewTabs">
+      <button class="tab active" data-view="generator">准星生成器</button>
+      <button class="tab" data-view="pros">选手准星</button>
+      <button class="tab" data-view="convert">分享码互转</button>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn" title="切换白天/黑夜模式">🌙</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ 视图 1：准星生成器 ============ -->
+  <section class="view" id="view-generator">
+    <div class="gen-layout">
+      <div class="gen-left">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">实时预览</span>
+            <div class="map-switch">
+              <button id="bgPrev" title="上一张地图">‹</button>
+              <span id="mapName">Dust2</span>
+              <button id="bgNext" title="下一张地图">›</button>
+            </div>
+          </div>
+          <div class="preview-stage" id="previewStage">
+            <img id="bgImg" src="assets/bg-dust2.webp" alt="">
+            <canvas id="previewCanvas"></canvas>
+            <div class="preview-hud" id="previewHud"></div>
+            <div class="recoil-chip" id="recoilChip">开火后坐力</div>
+          </div>
+          <div class="preview-actions">
+            <button class="btn btn-ghost btn-sm" id="btnRecoil">模拟开火</button>
+            <button class="btn btn-ghost btn-sm" id="btnReset">重置默认</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">分享码</span>
+            <span class="panel-hint">游戏内：设置 → 准星 → 导入分享码</span>
+          </div>
+          <div class="code-row">
+            <input id="shareCodeInput" spellcheck="false" autocomplete="off" placeholder="CSGO-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX">
+            <button class="btn btn-primary" id="btnCopyCode">复制</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btnImportCode">导入分享码</button>
+            <button class="btn btn-ghost" id="btnCopyCfg">复制 CFG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel settings-panel">
+        <div class="panel-head"><span class="panel-title">准星参数</span></div>
+
+        <div class="group">
+          <div class="group-title">样式</div>
+          <div class="segmented" id="styleSeg">
+            <button data-style="0">经典</button>
+            <button data-style="1">传统</button>
+            <button data-style="2">经典静态</button>
+          </div>
+          <div class="field">
+            <div class="field-head"><label>间距 Gap</label><span class="field-val" id="vGap">3</span></div>
+            <input type="range" id="sGap" min="-5" max="5" step="0.5" value="3">
+          </div>
+          <div class="field">
+            <div class="field-head"><label>长度 Length</label><span class="field-val" id="vLength">5</span></div>
+            <input type="range" id="sLength" min="0.5" max="10" step="0.5" value="5">
+          </div>
+          <div class="field">
+            <div class="field-head"><label>粗细 Thickness</label><span class="field-val" id="vThickness">1</span></div>
+            <input type="range" id="sThickness" min="0.1" max="6" step="0.1" value="1">
+          </div>
+          <div class="field">
+            <div class="field-head"><label>固定间距 Fixed Gap</label><span class="field-val" id="vFixedGap">0</span></div>
+            <input type="range" id="sFixedGap" min="0" max="10" step="0.1" value="0">
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title">颜色</div>
+          <div class="rgb-row">
+            <div class="rgb-cell r">
+              <span class="rgb-label">R</span>
+              <input type="range" id="sRed" min="0" max="255" step="1" value="0">
+              <span class="rgb-val" id="vRed">0</span>
+            </div>
+            <div class="rgb-cell g">
+              <span class="rgb-label">G</span>
+              <input type="range" id="sGreen" min="0" max="255" step="1" value="255">
+              <span class="rgb-val" id="vGreen">255</span>
+            </div>
+            <div class="rgb-cell b">
+              <span class="rgb-label">B</span>
+              <input type="range" id="sBlue" min="0" max="255" step="1" value="0">
+              <span class="rgb-val" id="vBlue">0</span>
+            </div>
+          </div>
+          <div class="color-row2">
+            <span class="color-swatch" id="colorChip"></span>
+            <span class="switch-label">使用透明度</span>
+            <label class="switch"><input type="checkbox" id="sUseAlpha" checked><span class="track"></span></label>
+          </div>
+          <div class="field">
+            <div class="field-head"><label>透明度 Alpha</label><span class="field-val" id="vAlpha">200</span></div>
+            <input type="range" id="sAlpha" min="0" max="255" step="1" value="200">
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title">描边 · 高级</div>
+          <div class="switch-row">
+            <span>绘制描边</span>
+            <label class="switch"><input type="checkbox" id="sOutlineEnabled"><span class="track"></span></label>
+          </div>
+          <div class="field">
+            <div class="field-head"><label>描边粗细</label><span class="field-val" id="vOutline">0.5</span></div>
+            <input type="range" id="sOutline" min="0" max="3" step="0.5" value="0.5">
+          </div>
+          <div class="switch-row">
+            <span>中心点</span>
+            <label class="switch"><input type="checkbox" id="sDot"><span class="track"></span></label>
+          </div>
+          <div class="switch-row">
+            <span>T 型准星</span>
+            <label class="switch"><input type="checkbox" id="sT"><span class="track"></span></label>
+          </div>
+          <div class="switch-row">
+            <span>跟随后坐力</span>
+            <label class="switch"><input type="checkbox" id="sRecoil"><span class="track"></span></label>
+          </div>
+          <div class="switch-row">
+            <span>使用武器缩放间距</span>
+            <label class="switch"><input type="checkbox" id="sWeaponGap"><span class="track"></span></label>
+          </div>
+          <details class="collapse">
+            <summary>动态准星<small>跟随移动/开火的分散效果</small></summary>
+            <div class="collapse-body">
+              <div class="field">
+                <div class="field-head"><label>动态分散距离</label><span class="field-val" id="vSplitDist">7</span></div>
+                <input type="range" id="sSplitDist" min="0" max="30" step="1" value="7">
+              </div>
+              <div class="field">
+                <div class="field-head"><label>内侧分裂透明度</label><span class="field-val" id="vInnerSplit">1</span></div>
+                <input type="range" id="sInnerSplit" min="0" max="1" step="0.1" value="1">
+              </div>
+              <div class="field">
+                <div class="field-head"><label>外侧分裂透明度</label><span class="field-val" id="vOuterSplit">0.5</span></div>
+                <input type="range" id="sOuterSplit" min="0" max="1" step="0.1" value="0.5">
+              </div>
+              <div class="field">
+                <div class="field-head"><label>分裂比例</label><span class="field-val" id="vSplitRatio">1</span></div>
+                <input type="range" id="sSplitRatio" min="0" max="1" step="0.1" value="1">
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 视图 2：选手准星 ============ -->
+  <section class="view" id="view-pros" hidden>
+    <div class="pros-layout">
+      <aside class="team-side">
+        <div class="team-side-head">战队</div>
+        <div class="team-list" id="teamList"></div>
+      </aside>
+      <div class="players-side">
+        <div class="players-toolbar">
+          <div class="search-box">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            </span>
+            <input type="text" id="proSearch" placeholder="搜索选手…">
+          </div>
+          <span class="players-count" id="playersCount"></span>
+        </div>
+        <div class="players-grid" id="proGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 视图 3：分享码互转 ============ -->
+  <section class="view" id="view-convert" hidden>
+    <div class="section-head">
+      <h2>分享码互转</h2>
+      <p>分享码 ↔ 参数 ↔ cfg 命令</p>
+    </div>
+    <div class="convert-grid">
+      <div class="panel convert-card">
+        <h3>分享码 → 参数</h3>
+        <textarea id="codeImport" placeholder="CSGO-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"></textarea>
+        <button class="btn btn-primary" id="btnDecode">解码并应用</button>
+        <div class="status-msg" id="statusDecode"></div>
+      </div>
+      <div class="panel convert-card">
+        <h3>CFG → 参数</h3>
+        <textarea id="cfgImport" placeholder='cl_crosshairgap "1"
+cl_crosshairsize "3"
+cl_crosshaircolor_r "255"...'></textarea>
+        <button class="btn btn-primary" id="btnImportCfg">解析并应用</button>
+        <div class="status-msg" id="statusImport"></div>
+      </div>
+      <div class="panel convert-card">
+        <h3>当前参数 → CFG</h3>
+        <textarea id="cfgOutput" readonly></textarea>
+        <button class="btn btn-ghost" id="btnCopyCfg2">复制 CFG</button>
+        <div class="status-msg" id="statusExport"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>SHOWKEY 制作</span>
+</footer>
+
+<!-- 回到顶部 -->
+<button class="to-top" id="toTop" title="回到顶部">↑</button>
+
+<!-- 移动端悬浮准星小窗 -->
+<div id="miniPreview" class="mini-preview" title="回到预览区">
+  <img id="miniImg" alt="" class="cx-img">
+</div>
+
+<!-- 选手准星弹窗 -->
+<div class="overlay" id="playerModal" hidden>
+  <div class="crosshair-modal">
+    <button class="modal-x" id="modalClose">✕</button>
+    <div class="modal-head">
+      <div class="modal-player">
+        <img id="mTeamLogo" class="m-teamlogo" alt="">
+        <div>
+          <div class="m-name" id="mName"></div>
+          <div class="m-meta" id="mMeta"></div>
+        </div>
+      </div>
+      <div class="m-current-code" id="mCode"></div>
+    </div>
+    <div class="m-current">
+      <div class="m-preview" id="mPreview"></div>
+      <div class="m-side">
+        <div class="m-side-title">当前准星</div>
+        <div class="m-btns">
+          <button class="btn btn-primary" id="mApply">应用到生成器</button>
+          <button class="btn btn-ghost" id="mCopy">复制分享码</button>
+        </div>
+        <div class="m-params" id="mParams"></div>
+      </div>
+    </div>
+    <div class="m-history">
+      <div class="m-history-title">历史版本</div>
+      <div class="m-history-list" id="mHistoryList"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="badge" style="position:fixed;left:10px;bottom:8px;z-index:300;font-size:11px;color:#666;background:rgba(0,0,0,0.6);padding:2px 8px;border-radius:5px;font-family:monospace"></div>
+
+<script src="js/codec.js?v=19"></script>
+<script src="js/players.js?v=19"></script>
+<script src="js/app.js?v=19"></script>
+</body>
+</html>
