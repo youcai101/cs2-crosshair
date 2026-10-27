@@ -430,48 +430,31 @@ const closeIfOpen = () => { if (!$("playerModal").hidden) click($("modalClose"))
   ok($("cfgOutput").value.indexOf("cl_crosshair_drawoutline 2") > -1, "半描边：drawoutline = 2");
   ok($("outlineSeg").querySelector('button[data-outline="2"]').classList.contains("active"), "半轮廓按钮处于选中态");
   click(oBtns.find((b) => b.dataset.outline === "1"));
-  // 颜色控件：游戏同款调色盘对话框（SV 方块 + 色相条 + 不透明度条 + 数值框）
-  section("⑥.1 颜色控件：游戏同款调色盘对话框");
-  ok(!!$("cpTrigger"), "设置行有调色入口（#cpTrigger）");
+  // 颜色控件：游戏同款调色盘，直接内嵌在参数面板里（不是二级菜单）
+  section("⑥.1 颜色控件：内嵌的游戏同款调色盘（无二级菜单 / 无候选色）");
   ok(qa("#xhairPalette, .color-palette, [data-rgb]").length === 0, "候选色板已移除（无 #xhairPalette / .color-palette）");
   ok(!$("sRed") && !$("sGreen") && !$("sBlue") && !$("sValue") && !$("sAlpha"),
     "旧滑杆全部移除（无 sRed/sGreen/sBlue/sValue/sAlpha）");
-  ok($("cpDialog").hidden === true, "调色盘默认收起");
-  click($("cpTrigger"));
-  ok($("cpDialog").hidden === false, "点入口打开调色盘（与游戏一致：浮层）");
+  ok(!$("cpDialog") && !$("cpTrigger") && !$("cpAccept") && !$("cpCancel"),
+    "不再有二级菜单（无 #cpDialog / #cpTrigger / 取消-接受按钮）");
+  ok($("cpSV").closest(".settings-panel") !== null, "调色盘直接嵌在参数面板里（不是浮层）");
   ok(!!$("cpSV") && !!$("cpHue") && !!$("cpAlpha"), "调色盘有 SV 方块 + 色相条 + 不透明度条");
-  ok(!!$("cpNew") && !!$("cpCur"), "调色盘有「新 / 当前」两个色块");
-  ok(["nRed", "nGreen", "nBlue", "nAlpha", "cpHexInput"].every((id) => !!$(id)), "调色盘有 R/G/B/#/A 五个数值框");
+  ok(["nRed", "nGreen", "nBlue", "nAlpha", "cpHexInput"].every((id) => !!$(id)),
+    "调色盘有 R/G/B/#/A 五个数值框");
   ok($("cpSV").getAttribute("role") === "slider" && $("cpSV").getAttribute("tabindex") === "0",
     "SV 方块可键盘操作（role=slider + tabindex=0）");
-  const colorBefore = [$("nRed").value, $("nGreen").value, $("nBlue").value].join(",");
-  // 数值框 → 命令 / 十六进制 / 设置行同步
+  ok($("cpHue").getAttribute("role") === "slider" && $("cpAlpha").getAttribute("role") === "slider",
+    "色相条 / 不透明度条也是 slider");
+  // 数值框 → 命令 / 十六进制同步（没有「确定」，改完立即生效）
   $("nRed").value = "255"; fire($("nRed"), "change");
   $("nGreen").value = "0"; fire($("nGreen"), "change");
   $("nBlue").value = "0"; fire($("nBlue"), "change");
   ok(/cl_crosshaircolor_r 255/.test($("cfgOutput").value) && /cl_crosshaircolor_g 0/.test($("cfgOutput").value) &&
     /cl_crosshaircolor_b 0/.test($("cfgOutput").value), "RGB 数值输入 → 控制台命令同步");
-  ok($("cpHex").textContent === "#FF0000", "十六进制回显同步：" + $("cpHex").textContent);
-  // 「取消」= 退回打开时的颜色（游戏同款语义）
-  click($("cpCancel"));
-  ok($("cpDialog").hidden === true, "取消后收起调色盘");
-  ok([$("nRed").value, $("nGreen").value, $("nBlue").value].join(",") === colorBefore,
-    "取消回滚到打开前的颜色：" + [$("nRed").value, $("nGreen").value, $("nBlue").value].join(","));
-  ok($("cpHex").textContent === "#00FF00", "回滚后设置行也跟着回到绿色：" + $("cpHex").textContent);
-  // 「接受」= 保留改动
-  click($("cpTrigger"));
-  $("nRed").value = "0"; fire($("nRed"), "change");
-  $("nGreen").value = "0"; fire($("nGreen"), "change");
-  $("nBlue").value = "255"; fire($("nBlue"), "change");
-  click($("cpAccept"));
-  ok($("cpDialog").hidden === true && $("cpHex").textContent === "#0000FF",
-    "接受后保留改动：" + $("cpHex").textContent);
+  ok($("cpHexInput").value === "#FF0000", "十六进制回显同步：" + $("cpHexInput").value);
   // 不透明度：数值框 → 命令；方向键按 5 步进
-  click($("cpTrigger"));
-  const snapHex = $("cpHex").textContent;      // 打开那一刻的颜色，取消 / Escape 都要回到它
   $("nAlpha").value = "128"; fire($("nAlpha"), "change");
   ok(/cl_crosshaircolor_a 128/.test($("cfgOutput").value), "不透明度数值框 → 命令同步");
-  ok($("cpAlphaText").textContent === "128", "设置行显示不透明度：" + $("cpAlphaText").textContent);
   const alphaBefore = $("cpAlpha").getAttribute("aria-valuenow");
   fire($("cpAlpha"), "keydown", { key: "ArrowLeft" });
   ok($("cpAlpha").getAttribute("aria-valuenow") !== alphaBefore,
@@ -483,19 +466,12 @@ const closeIfOpen = () => { if (!$("playerModal").hidden) click($("modalClose"))
     "方向键改变色相：" + hueBefore + "° → " + $("cpHue").getAttribute("aria-valuenow") + "°");
   // 十六进制输入框
   $("cpHexInput").value = "#00ff00"; fire($("cpHexInput"), "change");
-  ok($("cpHex").textContent === "#00FF00", "十六进制输入 → 颜色同步：" + $("cpHex").textContent);
-  // Escape = 取消并回滚
-  $("nRed").value = "10"; fire($("nRed"), "change");
-  fire(document, "keydown", { key: "Escape" });
-  ok($("cpDialog").hidden === true, "Escape 关闭调色盘");
-  ok($("cpHex").textContent === snapHex, "Escape 等同取消（回滚到打开前 " + snapHex + "）：" + $("cpHex").textContent);
+  ok(/cl_crosshaircolor_r 0/.test($("cfgOutput").value) && /cl_crosshaircolor_g 255/.test($("cfgOutput").value) &&
+    $("cpHexInput").value === "#00FF00", "十六进制输入 → 颜色同步：" + $("cpHexInput").value);
   // 复位到默认准星绿 + 满不透明度，后续用例从已知状态继续
-  click($("cpTrigger"));
   $("nAlpha").value = "255"; fire($("nAlpha"), "change");
-  $("cpHexInput").value = "#00FF00"; fire($("cpHexInput"), "change");
-  click($("cpAccept"));
-  ok($("cpHex").textContent === "#00FF00" && $("cpAlphaText").textContent === "255",
-    "复位为绿色 / 不透明度 255：" + $("cpHex").textContent + " · " + $("cpAlphaText").textContent);
+  ok(/cl_crosshaircolor_a 255/.test($("cfgOutput").value) && $("cpHexInput").value === "#00FF00",
+    "复位为绿色 / 不透明度 255：" + $("cpHexInput").value);
 
   section("⑦ 分享码输出 + CSGO- 旧码导入提示");
   const importInput = $("importInput");

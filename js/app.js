@@ -765,13 +765,12 @@
     syncColorFromSettings();
   }
 
-  /* ---------------- 调色盘（与游戏里的取色对话框同构） ----------------
+  /* ---------------- 调色盘（与游戏里的取色界面同构，直接内嵌在参数卡片里） ----------------
    * 左：饱和度 × 明度 方块（横向 = 饱和度，纵向 = 明度）+ 色相条 + 不透明度条
-   * 右：新 / 当前 两个色块 + R G B # A 五个数值框
+   * 右：R G B # A 五个数值框
    * 拖动 / 键盘 / 数值框都写回 state.settings，再由 syncColorFromSettings() 反向刷新，
-   * 所以只有一份状态。拖动即时生效；「取消」退回打开对话框那一刻的快照。 */
+   * 所以只有一份状态；没有「确定 / 取消」，改动立刻生效。 */
   var cpHue = 120;        // 最近一次有意义的色相（灰 / 黑时保留，不会跳回红色）
-  var cpSnapshot = null;  // 打开对话框那一刻的 rgba
 
   function rgbToHsv(r, g, b) {
     r /= 255; g /= 255; b /= 255;
@@ -799,13 +798,6 @@
     return "#" + h(r) + h(g) + h(b);
   }
 
-  // 色块：棋盘格衬底（CSS）+ 颜色叠加，和游戏里一样能看出 alpha
-  function paintChip(el, r, g, b, a) {
-    if (!el) return;
-    el.style.setProperty("--chip", "rgb(" + r + "," + g + "," + b + ")");
-    el.style.setProperty("--chip-a", String(Math.max(0, Math.min(255, a)) / 255));
-  }
-
   // 由 state.settings 刷新对话框里的一切 + 设置行上的色块与文字
   function syncColorFromSettings() {
     var s = state.settings;
@@ -814,13 +806,6 @@
     if (hsv.v > 0.004 && hsv.s > 0.004) cpHue = hsv.h;
     var hue = cpHue, sat = hsv.s, val = hsv.v;
     var solid = hexOf.apply(null, hsvToRgb(hue, 1, 1));
-
-    // 设置行：色块 + HEX + 不透明度
-    paintChip($("cpChip"), s.red, s.green, s.blue, s.alpha);
-    var hex = $("cpHex");
-    if (hex) hex.textContent = hexOf(s.red, s.green, s.blue);
-    var alphaText = $("cpAlphaText");
-    if (alphaText) alphaText.textContent = String(s.alpha);
 
     // SV 方块：底色 = 当前色相的纯色（左白上黑由 CSS 渐变叠加）
     var sv = $("cpSV"), svMarker = $("cpSVMarker");
@@ -849,10 +834,6 @@
       alphaBar.setAttribute("aria-valuetext", "不透明度 " + s.alpha);
     }
     if (alphaMarker) alphaMarker.style.left = (s.alpha / 255 * 100) + "%";
-
-    // 新 / 当前 两个色块
-    paintChip($("cpNew"), s.red, s.green, s.blue, s.alpha);
-    if (cpSnapshot) paintChip($("cpCur"), cpSnapshot.r, cpSnapshot.g, cpSnapshot.b, cpSnapshot.a);
 
     // 数值框（正在输入的那个不覆盖）
     ["Red", "Green", "Blue"].forEach(function (ch) {
@@ -896,31 +877,6 @@
     setColor(rgb[0], rgb[1], rgb[2]);
   }
 
-  function openColorDialog() {
-    var s = state.settings;
-    if (!s) return;
-    cpSnapshot = { r: s.red, g: s.green, b: s.blue, a: s.alpha };
-    $("cpDialog").hidden = false;
-    document.body.style.overflow = "hidden";
-    syncColorFromSettings();
-    var sv = $("cpSV");
-    if (sv) sv.focus({ preventScroll: true });
-  }
-
-  function closeColorDialog(restore) {
-    var snap = cpSnapshot;
-    cpSnapshot = null;
-    if (restore && snap) {
-      setAlpha(snap.a);
-      setColor(snap.r, snap.g, snap.b);
-    }
-    var dialog = $("cpDialog");
-    if (dialog) dialog.hidden = true;
-    document.body.style.overflow = "";
-    var trigger = $("cpTrigger");
-    if (trigger) trigger.focus({ preventScroll: true });
-  }
-
   // 拖拽：把指针位置归一化成 0..1 后交给 onPoint(x, y)
   function bindDragArea(el, onPoint) {
     if (!el) return;
@@ -946,16 +902,6 @@
   }
 
   function bindColorPicker() {
-    var trigger = $("cpTrigger");
-    if (trigger) trigger.addEventListener("click", openColorDialog);
-    if ($("cpAccept")) $("cpAccept").addEventListener("click", function () { closeColorDialog(false); });
-    if ($("cpCancel")) $("cpCancel").addEventListener("click", function () { closeColorDialog(true); });
-    if ($("cpDialog")) {
-      $("cpDialog").addEventListener("click", function (e) {
-        if (e.target === $("cpDialog")) closeColorDialog(true);
-      });
-    }
-
     // SV 方块：横向饱和度、纵向明度
     bindDragArea($("cpSV"), function (x, y) { applyHsv(cpHue, x, 1 - y); });
     // 色相条（黑白灰时按满饱和度 / 满明度过渡，避免拖了半天没反应）
@@ -2354,9 +2300,9 @@
     $("modalClose").addEventListener("click", closeModal);
     $("playerModal").addEventListener("click", function (e) { if (e.target === $("playerModal")) closeModal(); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Tab" && (!$("playerModal").hidden || !$("cpDialog").hidden)) {
+      if (e.key === "Tab" && !$("playerModal").hidden) {
         // 焦点陷阱：Tab / Shift+Tab 只在当前对话框内部循环
-        var scope = !$("cpDialog").hidden ? $("cpDialog") : (!$("convertModal").hidden ? $("convertModal") : $("playerModal"));
+        var scope = !$("convertModal").hidden ? $("convertModal") : $("playerModal");
         var focusables = Array.prototype.filter.call(
           scope.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'),
           function (el) { return el.offsetParent !== null || el === document.activeElement; }
@@ -2371,7 +2317,6 @@
         return;
       }
       if (e.key !== "Escape") return;
-      if (!$("cpDialog").hidden) { closeColorDialog(true); return; }
       if (!$("convertModal").hidden) { closeConvertDialog(); return; }
       closeModal();
     });

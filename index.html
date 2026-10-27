@@ -9,7 +9,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0d0d0d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='2' fill='%2300ff87'/%3E%3Cpath d='M12 5v4M12 15v4M5 12h4M15 12h4' stroke='%2305271a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/style.css?v=3099544">
+<link rel="stylesheet" href="css/style.css?v=0658415">
 </head>
 <body>
 
@@ -104,12 +104,30 @@
 
             <div class="group">
               <div class="group-title">颜色和透明度</div>
-              <button class="cp-trigger" id="cpTrigger" type="button" aria-haspopup="dialog" aria-controls="cpDialog" aria-label="打开调色盘">
-                <i class="cp-chip" id="cpChip" aria-hidden="true"></i>
-                <span class="cp-trigger-hex" id="cpHex">#00FF00</span>
-                <span class="cp-trigger-alpha">不透明度 <b id="cpAlphaText">255</b></span>
-                <span class="cp-trigger-go" aria-hidden="true">调色</span>
-              </button>
+              <div class="cp-inline">
+                <div class="cp-stack">
+                  <div class="cp-sv" id="cpSV" role="slider" tabindex="0"
+                       aria-label="饱和度与明度：左右调饱和度，上下调明度"
+                       aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="饱和度 100% · 明度 100%">
+                    <i class="cp-marker" id="cpSVMarker" aria-hidden="true"></i>
+                  </div>
+                  <div class="cp-slider cp-hue" id="cpHue" role="slider" tabindex="0" aria-label="色相"
+                       aria-valuemin="0" aria-valuemax="359" aria-valuenow="120" aria-valuetext="色相 120 度">
+                    <i class="cp-bar" id="cpHueMarker" aria-hidden="true"></i>
+                  </div>
+                  <div class="cp-slider cp-alpha" id="cpAlpha" role="slider" tabindex="0" aria-label="不透明度"
+                       aria-valuemin="0" aria-valuemax="255" aria-valuenow="255" aria-valuetext="不透明度 255">
+                    <i class="cp-bar" id="cpAlphaMarker" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="cp-pane">
+                  <label class="cp-field"><span>R</span><input type="number" id="nRed" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 R"></label>
+                  <label class="cp-field"><span>G</span><input type="number" id="nGreen" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色 G"></label>
+                  <label class="cp-field"><span>B</span><input type="number" id="nBlue" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 B"></label>
+                  <label class="cp-field cp-field-wide"><span>#</span><input type="text" id="cpHexInput" value="#00FF00" maxlength="7" spellcheck="false" autocomplete="off" aria-label="准星颜色十六进制"></label>
+                  <label class="cp-field"><span>A</span><input type="number" id="nAlpha" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色不透明度"></label>
+                </div>
+              </div>
             </div>
 
             <div class="group">
@@ -363,62 +381,19 @@
   </div>
 </div>
 
-<div class="overlay cp-overlay" id="cpDialog" hidden>
-  <div class="cp-dialog" role="dialog" aria-modal="true" aria-labelledby="cpTitle">
-    <div class="cp-head">
-      <h3 class="cp-title" id="cpTitle">颜色和透明度</h3>
-      <span class="cp-hint">拖动方块与条状滑块，或直接填数值</span>
-    </div>
-    <div class="cp-body">
-      <div class="cp-stack">
-        <div class="cp-sv" id="cpSV" role="slider" tabindex="0"
-             aria-label="饱和度与明度：左右调饱和度，上下调明度"
-             aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="饱和度 100% · 明度 100%">
-          <i class="cp-marker" id="cpSVMarker" aria-hidden="true"></i>
-        </div>
-        <div class="cp-slider cp-hue" id="cpHue" role="slider" tabindex="0" aria-label="色相"
-             aria-valuemin="0" aria-valuemax="359" aria-valuenow="120" aria-valuetext="色相 120 度">
-          <i class="cp-bar" id="cpHueMarker" aria-hidden="true"></i>
-        </div>
-        <div class="cp-slider cp-alpha" id="cpAlpha" role="slider" tabindex="0" aria-label="不透明度"
-             aria-valuemin="0" aria-valuemax="255" aria-valuenow="255" aria-valuetext="不透明度 255">
-          <i class="cp-bar" id="cpAlphaMarker" aria-hidden="true"></i>
-        </div>
-      </div>
-      <div class="cp-pane">
-        <span class="cp-pane-label">新</span>
-        <span class="cp-preview" id="cpNew" aria-hidden="true"></span>
-        <span class="cp-pane-label">当前</span>
-        <span class="cp-preview" id="cpCur" aria-hidden="true"></span>
-        <div class="cp-fields">
-          <label class="cp-field"><span>R</span><input type="number" id="nRed" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 R"></label>
-          <label class="cp-field"><span>G</span><input type="number" id="nGreen" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色 G"></label>
-          <label class="cp-field"><span>B</span><input type="number" id="nBlue" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 B"></label>
-          <label class="cp-field cp-field-wide"><span>#</span><input type="text" id="cpHexInput" value="#00FF00" maxlength="7" spellcheck="false" autocomplete="off" aria-label="准星颜色十六进制"></label>
-          <label class="cp-field"><span>A</span><input type="number" id="nAlpha" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色不透明度"></label>
-        </div>
-      </div>
-    </div>
-    <div class="cp-foot">
-      <button class="btn btn-ghost btn-sm" id="cpCancel" type="button">取消</button>
-      <button class="btn btn-primary btn-sm" id="cpAccept" type="button">接受</button>
-    </div>
-  </div>
-</div>
-
 <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<script src="js/core-alphabet.js?v=3099544"></script>
-<script src="js/core-layouts.js?v=3099544"></script>
-<script src="js/core-codec.js?v=3099544"></script>
-<script src="js/core-legacy.js?v=3099544"></script>
-<script src="js/core-convert.js?v=3099544"></script>
-<script src="js/core-convars.js?v=3099544"></script>
-<script src="js/render-model.js?v=3099544"></script>
-<script src="js/render-canvas.js?v=3099544"></script>
-<script src="js/codec.js?v=3099544"></script>
-<script src="js/players.js?v=3099544"></script>
-<script src="js/hltv-teams.js?v=3099544"></script>
-<script src="js/app.js?v=3099544"></script>
+<script src="js/core-alphabet.js?v=0658415"></script>
+<script src="js/core-layouts.js?v=0658415"></script>
+<script src="js/core-codec.js?v=0658415"></script>
+<script src="js/core-legacy.js?v=0658415"></script>
+<script src="js/core-convert.js?v=0658415"></script>
+<script src="js/core-convars.js?v=0658415"></script>
+<script src="js/render-model.js?v=0658415"></script>
+<script src="js/render-canvas.js?v=0658415"></script>
+<script src="js/codec.js?v=0658415"></script>
+<script src="js/players.js?v=0658415"></script>
+<script src="js/hltv-teams.js?v=0658415"></script>
+<script src="js/app.js?v=0658415"></script>
 </body>
 </html>

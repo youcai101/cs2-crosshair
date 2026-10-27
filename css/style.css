@@ -285,28 +285,21 @@ main { position: relative; z-index: 1; }
 @media (width >= 1380px) {
   .gen-layout {
     display: grid;
-    grid-template-columns: clamp(520px, 38vw, 720px) minmax(0, 1fr);
+    grid-template-columns: minmax(520px, clamp(560px, 44vw, 900px)) minmax(0, 1fr);
     grid-template-areas:
       "preview settings"
-      "share   settings";
-    grid-template-rows: auto minmax(320px, 1fr);
+      "share   share";
+    grid-template-rows: auto auto;
   }
   .gen-layout > .preview-panel { grid-area: preview; }
+  /* 行高由参数卡片决定：预览主体在卡片内垂直居中，两卡片底边对齐，左列不留空洞 */
+  .gen-layout > .preview-panel .preview-body { justify-content: center; }
   .gen-layout > .settings-panel { grid-area: settings; }
   .gen-layout > .share-panel { grid-area: share; }
-  /* 左列窄容器：分享区改单列纵排，命令输出吸收剩余高度 */
-  .gen-layout > .share-panel .share-body {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
-    max-width: none;
-    flex: 1 1 auto;
-  }
-  .gen-layout > .share-panel .share-col + .share-col { border-left: 0; border-top: 1px solid var(--hairline); }
-  .gen-layout > .share-panel > .panel-head { max-width: none; }
-  .gen-layout > .share-panel .cmd-col { flex: 1 1 auto; }
-  .gen-layout > .share-panel #cfgOutput { min-height: 140px; }
-  /* 右列参数卡片随列高均匀伸展（auto 行 align-content: stretch），列底无空白 */
-  .gen-layout > .settings-panel .groups { flex: 1 1 auto; }
+  /* 分享与导入通栏：两列并排（分享码 / 导入 ｜ 控制台命令），不再挤压成单列 */
+  .gen-layout > .share-panel .share-body { max-width: 1240px; }
+  .gen-layout > .share-panel > .panel-head { max-width: 1240px; }
+  .gen-layout > .share-panel #cfgOutput { min-height: 148px; }
 }
 
 /* 参数面板：字段行 [标签 | 滑杆 | 数值] 三列网格（cs2util 式紧凑行）。
@@ -455,7 +448,7 @@ main { position: relative; z-index: 1; }
  * 用区间语法 width < 1380 —— 整数边界在 dpr 浮点误差下（如 1280 设备像素 ≈ 1279.99996 CSS px）
  * max-width: 1379px 这类整數边界会失配，< 1380px 恒稳。 */
 @media (769px <= width < 1380px) {
-  .preview-body { max-width: 752px; margin-inline: auto; }
+  .preview-body { max-width: 1000px; margin-inline: auto; }
 }
 .preview-stage:focus-visible {
   box-shadow: inset 0 0 0 2px var(--accent-line);
@@ -752,6 +745,8 @@ main { position: relative; z-index: 1; }
     max-width: 1240px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto minmax(96px, 1fr);
+    align-content: start;
     gap: 12px;
   }
   .settings-panel > .groups .group {
@@ -761,7 +756,7 @@ main { position: relative; z-index: 1; }
     padding: 14px 16px 10px;
   }
   .settings-panel > .groups .group:first-child { padding-top: 15px; }
-  .settings-panel .group--wide { grid-column: 1 / -1; }
+  .settings-panel .group--wide { grid-column: 1 / -1; align-self: stretch; }
 }
 
 .field { margin-bottom: 12px; }
@@ -881,8 +876,8 @@ input[type="range"][disabled] { cursor: not-allowed; }
 
 .rgb-row {
   display: grid;
-  /* 自适应换行：宽卡片 3 格一行，窄卡片 2+1 —— 单格永不小于 140px，通道不被挤压 */
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  /* 自适应换行：三格一行优先；单格不低于 100px（滑杆仍可拖），避免窄卡片掉成 2+1 */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: var(--s2);
   margin-bottom: var(--s3);
 }
@@ -916,72 +911,19 @@ input[type="range"][disabled] { cursor: not-allowed; }
   text-align: right;
 }
 
-/* 调色盘：与游戏里的取色对话框同构 —— 左「SV 方块 + 色相条 + 不透明度条」，
- * 右「新 / 当前」两个色块 + R G B # A 数值框。没有候选色，任意颜色都能调出来。 */
-.cp-trigger {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 44px;
-  padding: 0 13px;
-  border: 0;
-  border-radius: 0;
-  background: var(--input-bg);
-  box-shadow: inset 0 0 0 1px var(--hairline);
-  color: var(--label-2);
-  font-family: inherit;
-  font-size: 13.5px;
-  cursor: pointer;
-  transition: background .15s ease, box-shadow .15s ease;
+/* 调色盘：与游戏里的取色界面同构，但直接内嵌在参数卡片里 —— 不做二级菜单、没有候选色。
+ * 左：饱和度 × 明度方块（横向 = 饱和度，纵向 = 明度）+ 色相条 + 不透明度条；
+ * 右：R G B # A 五个数值框。改动即时生效，没有「确定 / 取消」。 */
+.cp-inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 168px;
+  gap: var(--s3);
+  align-items: start;
 }
-.cp-trigger:hover { background: var(--fill-5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
-.cp-trigger:focus-visible { outline: none; box-shadow: inset 0 0 0 1px var(--accent-line), 0 0 0 3px var(--focus-ring); }
-.cp-trigger-hex { font-family: var(--font-mono); font-size: 13px; font-weight: 620; letter-spacing: .02em; color: var(--label); }
-.cp-trigger-alpha { font-size: 12.5px; color: var(--label-3); }
-.cp-trigger-alpha b { font-family: var(--font-mono); font-weight: 620; color: var(--label-2); }
-.cp-trigger-go { margin-left: auto; font-size: 12.5px; color: var(--label-3); }
-.cp-trigger:hover .cp-trigger-go { color: var(--accent); }
-
-/* 色块：棋盘格打底 + 颜色叠加，alpha 一眼可见 */
-.cp-chip,
-.cp-preview {
-  position: relative;
-  flex: none;
-  overflow: hidden;
-  background-color: #2a2a2a;
-  background-image: repeating-conic-gradient(#3c3c3c 0% 25%, #262626 0% 50%);
-  background-size: 8px 8px;
-  box-shadow: inset 0 0 0 1px var(--hairline);
-}
-.cp-chip { width: 44px; height: 22px; }
-.cp-preview { width: 100%; height: 32px; }
-.cp-chip::after,
-.cp-preview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--chip, #00ff00);
-  opacity: var(--chip-a, 1);
-}
-
-/* 对话框 */
-.cp-dialog {
-  width: min(560px, calc(100vw - 32px));
-  max-height: 92vh;
-  overflow-y: auto;
-  padding: 18px;
-  background: var(--surface-1);
-  box-shadow: inset 0 0 0 1px var(--hairline), var(--shadow-3);
-}
-.cp-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
-.cp-title { margin: 0; font-family: var(--font-display); font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--label); }
-.cp-hint { font-size: 12px; color: var(--label-4); }
-.cp-body { display: grid; grid-template-columns: minmax(0, 1fr) 172px; gap: var(--s4); align-items: start; }
-.cp-stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cp-stack { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
 .cp-sv {
   position: relative;
-  height: 172px;
+  height: 152px;
   cursor: crosshair;
   touch-action: none;
   outline: none;
@@ -1030,10 +972,8 @@ input[type="range"][disabled] { cursor: not-allowed; }
   pointer-events: none;
 }
 
-/* 右侧：新 / 当前 + 数值框 */
-.cp-pane { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
-.cp-pane-label { font-size: 11.5px; letter-spacing: .04em; color: var(--label-4); }
-.cp-fields { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+/* 右侧：R G B # A 一列排开（游戏对话框的右半部分） */
+.cp-pane { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .cp-field { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .cp-field > span {
   width: 12px;
@@ -1070,7 +1010,6 @@ input[type="range"][disabled] { cursor: not-allowed; }
 .cp-field input::-webkit-outer-spin-button,
 .cp-field input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .cp-field-wide input { text-align: left; letter-spacing: .04em; }
-.cp-foot { display: flex; justify-content: flex-end; gap: var(--s2); margin-top: 16px; }
 
 .switch-row {
   display: flex;
@@ -2570,9 +2509,11 @@ input[type="range"][disabled] { cursor: not-allowed; }
   .map-rail { flex-wrap: wrap; }
   .rgb-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   /* 调色盘在窄屏改上下排：色带在上、色块与数值框在下 */
-  .cp-body { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
+  .cp-inline { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
   .cp-sv { height: 148px; }
-  .cp-preview { height: 26px; }
+  /* 窄屏：R G B 三个一行，# 占两格 + A 一格，凑满第二行不落单 */
+  .cp-pane { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .cp-field-wide { grid-column: span 2; }
   .hist-entry { flex-wrap: wrap; }
   .h-actions { width: 100%; justify-content: flex-end; }
   .group { padding: var(--s3) var(--s4) var(--s1); }
