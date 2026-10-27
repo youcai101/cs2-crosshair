@@ -384,6 +384,7 @@
         t.tabIndex = on ? 0 : -1;
       });
       window.scrollTo(0, 0);
+      closeColorPop(false);
       if (name === "pros") { dynHardStop(false); renderPlayers(); }
       if (name === "generator") { renderPreview(); }
       syncGenLayout();
@@ -427,8 +428,7 @@
     var x = rect.left + 9 + frac * (rect.width - 18);
     x = Math.max(rect.left + 14, Math.min(rect.right - 14, x));
     var field = input.closest(".field");
-    var chip = (field && field.querySelector(".field-val")) ||
-      (input.closest(".rgb-cell") && input.closest(".rgb-cell").querySelector(".rgb-val"));
+    var chip = field && field.querySelector(".field-val");
     bubble.textContent = chip ? chip.textContent : input.value;
     bubble.style.left = Math.round(x) + "px";
     bubble.style.top = Math.round(rect.top - 10) + "px";
@@ -502,10 +502,6 @@
     { id: "sThickness", key: "thickness", v: "vThickness" },
     { id: "sGap", key: "gap", v: "vGap" },
     { id: "sSpread", key: "dynamicSpreadLimit", v: "vSpread" },
-    { id: "sOR", key: "outlineRed", v: "vOR" },
-    { id: "sOG", key: "outlineGreen", v: "vOG" },
-    { id: "sOB", key: "outlineBlue", v: "vOB" },
-    { id: "sOA", key: "outlineAlpha", v: "vOA" },
     { id: "sSplitDist", key: "splitDistance", v: "vSplitDist" },
     { id: "sInnerSplit", key: "innerSplitAlpha", v: "vInnerSplit" },
     { id: "sOuterSplit", key: "outerSplitAlpha", v: "vOuterSplit" },
@@ -759,18 +755,180 @@
     syncDynamicPanel();
   }
 
-  // 颜色区：SV 方块 / 色相条 / 不透明度条 / 数值框，四者共用同一份 state.settings
-  function syncColorUI() {
-    if (!state.settings) return;
-    syncColorFromSettings();
+  /* ---------------- 颜色：主色 / 轮廓色共用一个二级调色盘 ----------------
+   * 两个颜色行只显示色块，点开同一个弹层（role=dialog，游戏取色界面同构）：
+   * 左 SV 方块 + 色相条 + 不透明度条，右「新 / 当前」对照 + R G B # A。
+   * 拖动 / 键盘 / 数值框都即时写回 state.settings（预览实时）；「取消」回滚到打开时的快照，
+   * 「接受」只负责关闭，没有第二份状态。 */
+  var CP_SLOTS = {
+    xhair: {
+      label: "颜色和透明度", trigger: "colorTrigger", chip: "colorChip", row: "colorRow",
+      r: "red", g: "green", b: "blue", a: "alpha",
+    },
+    outline: {
+      label: "轮廓颜色和透明度", trigger: "outlineColorTrigger", chip: "outlineColorChip", row: "outlineColorRow",
+      r: "outlineRed", g: "outlineGreen", b: "outlineBlue", a: "outlineAlpha",
+    },
+  };
+  var cpSlot = "xhair";       // 当前编辑的槽位：xhair 主色 / outline 轮廓色
+  var cpOpen = false;
+  var cpSnapshot = null;      // 打开时的颜色 + 分享码原态，用于「取消」回滚
+  var cpHues = { xhair: 120, outline: 0 };  // 每个槽位各自保留最近一次有意义的色相
+
+  function slotRGB(slot) {
+    var s = state.settings, k = CP_SLOTS[slot || cpSlot];
+    return { r: s[k.r], g: s[k.g], b: s[k.b], a: s[k.a] };
   }
 
-  /* ---------------- 调色盘（与游戏里的取色界面同构，直接内嵌在参数卡片里） ----------------
-   * 左：饱和度 × 明度 方块（横向 = 饱和度，纵向 = 明度）+ 色相条 + 不透明度条
-   * 右：R G B # A 五个数值框
-   * 拖动 / 键盘 / 数值框都写回 state.settings，再由 syncColorFromSettings() 反向刷新，
-   * 所以只有一份状态；没有「确定 / 取消」，改动立刻生效。 */
-  var cpHue = 120;        // 最近一次有意义的色相（灰 / 黑时保留，不会跳回红色）
+  function paintSwatch(el, hex, alpha) {
+    if (!el) return;
+    el.style.setProperty("--chip", hex);
+    el.style.setProperty("--chip-a", String(alpha / 255));
+  }
+
+  function syncColorUI() {
+    if (!state.settings) return;
+    var s = state.settings;
+    paintSwatch($("colorChip"), hexOf(s.red, s.green, s.blue), s.alpha);
+    paintSwatch($("outlineColorChip"), hexOf(s.outlineRed, s.outlineGreen, s.outlineBlue), s.outlineAlpha);
+    // 色块按钮的可访问名 / 悬浮提示：颜色 + 不透明度一眼可读
+    ["xhair", "outline"].forEach(function (slot) {
+      var k = CP_SLOTS[slot], btn = $(k.trigger), c = slotRGB(slot);
+      if (!btn) return;
+      var hex = hexOf(c.r, c.g, c.b);
+      btn.title = k.label + " · " + hex + " · A " + c.a;
+      btn.setAttribute("aria-label", "打开调色盘：" + k.label + "，" + hex + "，不透明度 " + c.a);
+    });
+    syncColorPop();
+  }
+
+  /* ---------------- 调色盘弹层（二级菜单） ---------------- */
+  // 由 state.settings 刷新弹层里的一切；关闭时也同步，保证下次打开即是正确状态。
+  function syncColorPop() {
+    var s = state.settings;
+    if (!s) return;
+    var c = slotRGB(cpSlot);
+    var hsv = rgbToHsv(c.r, c.g, c.b);
+    var hue = cpHues[cpSlot];
+    if (hsv.v > 0.004 && hsv.s > 0.004) { hue = hsv.h; cpHues[cpSlot] = hue; }
+    var sat = hsv.s, val = hsv.v;
+    var solid = hexOf.apply(null, hsvToRgb(hue, 1, 1));
+
+    // SV 方块：底色 = 当前色相的纯色（左白上黑由 CSS 渐变叠加）
+    var sv = $("cpSV"), svMarker = $("cpSVMarker");
+    if (sv) {
+      sv.style.setProperty("--cp-hue", solid);
+      sv.setAttribute("aria-valuenow", String(Math.round(sat * 100)));
+      sv.setAttribute("aria-valuetext", "饱和度 " + Math.round(sat * 100) + "% · 明度 " + Math.round(val * 100) + "%");
+    }
+    if (svMarker) {
+      svMarker.style.left = (sat * 100) + "%";
+      svMarker.style.top = ((1 - val) * 100) + "%";
+      svMarker.style.setProperty("--cp-dot", hexOf(c.r, c.g, c.b));
+    }
+
+    // 色相条 / 不透明度条
+    var hueBar = $("cpHue"), hueMarker = $("cpHueMarker");
+    if (hueBar) {
+      hueBar.setAttribute("aria-valuenow", String(Math.round(hue)));
+      hueBar.setAttribute("aria-valuetext", "色相 " + Math.round(hue) + " 度");
+    }
+    if (hueMarker) hueMarker.style.left = (hue / 360 * 100) + "%";
+    var alphaBar = $("cpAlpha"), alphaMarker = $("cpAlphaMarker");
+    if (alphaBar) {
+      alphaBar.style.setProperty("--cp-solid", hexOf(c.r, c.g, c.b));
+      alphaBar.setAttribute("aria-valuenow", String(c.a));
+      alphaBar.setAttribute("aria-valuetext", "不透明度 " + c.a);
+    }
+    if (alphaMarker) alphaMarker.style.left = (c.a / 255 * 100) + "%";
+
+    // 数值框（正在输入的那个不覆盖）
+    [["Red", "r"], ["Green", "g"], ["Blue", "b"]].forEach(function (pair) {
+      var input = $("n" + pair[0]);
+      if (input && document.activeElement !== input) input.value = String(c[pair[1]]);
+    });
+    var hexInput = $("cpHexInput");
+    if (hexInput && document.activeElement !== hexInput) hexInput.value = hexOf(c.r, c.g, c.b);
+    var alphaInput = $("nAlpha");
+    if (alphaInput && document.activeElement !== alphaInput) alphaInput.value = String(c.a);
+
+    // 「新 / 当前」两格对照：新 = 实时值，当前 = 打开弹层时的快照
+    paintSwatch($("cpNew"), hexOf(c.r, c.g, c.b), c.a);
+    var snap = cpSnapshot || c;
+    paintSwatch($("cpCur"), hexOf(snap.r, snap.g, snap.b), snap.a);
+  }
+
+  function placeColorPop(trigger) {
+    var pop = $("cpPop");
+    if (!pop || pop.hidden) return;
+    var vw = window.innerWidth || 0;
+    // 窄屏：CSS 贴底抽屉，清掉内联坐标即可
+    if (!trigger || !trigger.getBoundingClientRect || vw <= 760) {
+      pop.style.left = "";
+      pop.style.top = "";
+      return;
+    }
+    var r = trigger.getBoundingClientRect();
+    var w = pop.offsetWidth || 312;
+    var h = pop.offsetHeight || 400;
+    var pad = 12, gap = 8;
+    var left = Math.max(pad, Math.min(r.right - w, vw - w - pad));
+    var top = r.bottom + gap;
+    if (top + h > (window.innerHeight || 0) - pad) top = Math.max(pad, r.top - h - gap);
+    pop.style.left = Math.round(left) + "px";
+    pop.style.top = Math.round(top) + "px";
+  }
+
+  function openColorPop(slot, trigger) {
+    var s = state.settings;
+    if (!s) return;
+    if (slot === "outline" && Number(s.outlineMode) === 0) return; // 无轮廓时没有可调的颜色
+    if (cpOpen) closeColorPop(false);
+    cpSlot = slot;
+    var c = slotRGB(slot);
+    cpSnapshot = {
+      r: c.r, g: c.g, b: c.b, a: c.a,
+      hue: cpHues[slot],
+      pristine: state.pristineCode,
+      importInfo: state.importInfo,
+    };
+    cpOpen = true;
+    var pop = $("cpPop");
+    if (!pop) return;
+    pop.hidden = false;
+    if ($("cpPopTitle")) $("cpPopTitle").textContent = CP_SLOTS[slot].label;
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+    syncColorUI();
+    placeColorPop(trigger);
+    var first = $("nRed");
+    if (first) { try { first.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  // revert=true：回滚到打开前的颜色与分享码原态；false：保留当前选择
+  function closeColorPop(revert) {
+    if (!cpOpen) return;
+    var pop = $("cpPop");
+    // 先把正在输入的数值框提交掉（失焦即提交）；否则回滚后焦点再移走，
+    // 那个「blur → commit」会拿旧输入值把回滚结果覆盖回去。
+    var ae = document.activeElement;
+    if (ae && pop && pop.contains(ae) && typeof ae.blur === "function") ae.blur();
+    var slot = cpSlot, snap = cpSnapshot;
+    cpOpen = false;
+    cpSnapshot = null;
+    if (pop) pop.hidden = true;
+    var btn = $(CP_SLOTS[slot].trigger);
+    if (btn) btn.setAttribute("aria-expanded", "false");
+    if (revert && snap) {
+      var s = state.settings, k = CP_SLOTS[slot];
+      s[k.r] = snap.r; s[k.g] = snap.g; s[k.b] = snap.b; s[k.a] = snap.a;
+      cpHues[slot] = snap.hue;
+      state.pristineCode = snap.pristine || null;
+      state.importInfo = snap.importInfo || null;
+      applySettingsToUI();
+      updateAll();
+    }
+    if (btn) { try { btn.focus({ preventScroll: true }); } catch (e) {} }
+  }
 
   function rgbToHsv(r, g, b) {
     r /= 255; g /= 255; b /= 255;
@@ -798,63 +956,16 @@
     return "#" + h(r) + h(g) + h(b);
   }
 
-  // 由 state.settings 刷新对话框里的一切 + 设置行上的色块与文字
-  function syncColorFromSettings() {
-    var s = state.settings;
-    if (!s) return;
-    var hsv = rgbToHsv(s.red, s.green, s.blue);
-    if (hsv.v > 0.004 && hsv.s > 0.004) cpHue = hsv.h;
-    var hue = cpHue, sat = hsv.s, val = hsv.v;
-    var solid = hexOf.apply(null, hsvToRgb(hue, 1, 1));
-
-    // SV 方块：底色 = 当前色相的纯色（左白上黑由 CSS 渐变叠加）
-    var sv = $("cpSV"), svMarker = $("cpSVMarker");
-    if (sv) {
-      sv.style.setProperty("--cp-hue", solid);
-      sv.setAttribute("aria-valuenow", String(Math.round(sat * 100)));
-      sv.setAttribute("aria-valuetext", "饱和度 " + Math.round(sat * 100) + "% · 明度 " + Math.round(val * 100) + "%");
-    }
-    if (svMarker) {
-      svMarker.style.left = (sat * 100) + "%";
-      svMarker.style.top = ((1 - val) * 100) + "%";
-      svMarker.style.setProperty("--cp-dot", hexOf(s.red, s.green, s.blue));
-    }
-
-    // 色相条 / 不透明度条
-    var hueBar = $("cpHue"), hueMarker = $("cpHueMarker");
-    if (hueBar) {
-      hueBar.setAttribute("aria-valuenow", String(Math.round(hue)));
-      hueBar.setAttribute("aria-valuetext", "色相 " + Math.round(hue) + " 度");
-    }
-    if (hueMarker) hueMarker.style.left = (hue / 360 * 100) + "%";
-    var alphaBar = $("cpAlpha"), alphaMarker = $("cpAlphaMarker");
-    if (alphaBar) {
-      alphaBar.style.setProperty("--cp-solid", hexOf(s.red, s.green, s.blue));
-      alphaBar.setAttribute("aria-valuenow", String(s.alpha));
-      alphaBar.setAttribute("aria-valuetext", "不透明度 " + s.alpha);
-    }
-    if (alphaMarker) alphaMarker.style.left = (s.alpha / 255 * 100) + "%";
-
-    // 数值框（正在输入的那个不覆盖）
-    ["Red", "Green", "Blue"].forEach(function (ch) {
-      var input = $("n" + ch);
-      if (input && document.activeElement !== input) input.value = String(s[ch.toLowerCase()]);
-    });
-    var hexInput = $("cpHexInput");
-    if (hexInput && document.activeElement !== hexInput) hexInput.value = hexOf(s.red, s.green, s.blue);
-    var alphaInput = $("nAlpha");
-    if (alphaInput && document.activeElement !== alphaInput) alphaInput.value = String(s.alpha);
-  }
-
-  // 统一写入口：任何来源改色都走这里，保证色块 / 命令 / 预览同帧刷新
+  // 统一写入口：任何来源改色都走这里，保证色块 / 命令 / 预览同帧刷新（作用于当前槽位）
   function setColor(r, g, b) {
     var s = state.settings;
     if (!s) return;
+    var k = CP_SLOTS[cpSlot];
     r = Math.max(0, Math.min(255, Math.round(r)));
     g = Math.max(0, Math.min(255, Math.round(g)));
     b = Math.max(0, Math.min(255, Math.round(b)));
-    if (s.red === r && s.green === g && s.blue === b) { syncColorFromSettings(); return; }
-    s.red = r; s.green = g; s.blue = b;
+    if (s[k.r] === r && s[k.g] === g && s[k.b] === b) { syncColorUI(); return; }
+    s[k.r] = r; s[k.g] = g; s[k.b] = b;
     markDirty();
     applySettingsToUI();
     updateAll();
@@ -863,15 +974,16 @@
   function setAlpha(a) {
     var s = state.settings;
     if (!s) return;
+    var k = CP_SLOTS[cpSlot];
     a = Math.max(0, Math.min(255, Math.round(a)));
-    if (s.alpha === a) { syncColorFromSettings(); return; }
-    s.alpha = a;
+    if (s[k.a] === a) { syncColorUI(); return; }
+    s[k.a] = a;
     markDirty();
     applySettingsToUI();
     updateAll();
   }
 
-  // 色相条 / 键盘只改 HSV 里的几维，色相由 cpHue 单独持有，不受取整影响
+  // 色相条 / 键盘只改 HSV 里的几维，色相按槽位单独持有，不受取整影响
   function applyHsv(h, sat, val) {
     var rgb = hsvToRgb(h, Math.max(0, Math.min(1, sat)), Math.max(0, Math.min(1, val)));
     setColor(rgb[0], rgb[1], rgb[2]);
@@ -903,10 +1015,11 @@
 
   function bindColorPicker() {
     // SV 方块：横向饱和度、纵向明度
-    bindDragArea($("cpSV"), function (x, y) { applyHsv(cpHue, x, 1 - y); });
+    bindDragArea($("cpSV"), function (x, y) { applyHsv(cpHues[cpSlot], x, 1 - y); });
     // 色相条（黑白灰时按满饱和度 / 满明度过渡，避免拖了半天没反应）
     bindDragArea($("cpHue"), function (x) {
-      var hsv = rgbToHsv(state.settings.red, state.settings.green, state.settings.blue);
+      var c = slotRGB(cpSlot);
+      var hsv = rgbToHsv(c.r, c.g, c.b);
       var live = hsv.v > 0.004;
       applyHsv(x * 360, live ? hsv.s : 1, live ? hsv.v : 1);
     });
@@ -916,7 +1029,8 @@
     // 键盘：方向键 ±4%（色相 5° / alpha 5），Shift 大步
     if ($("cpSV")) {
       $("cpSV").addEventListener("keydown", function (e) {
-        var hsv = rgbToHsv(state.settings.red, state.settings.green, state.settings.blue);
+        var c = slotRGB(cpSlot);
+        var hsv = rgbToHsv(c.r, c.g, c.b);
         var step = e.shiftKey ? 0.2 : 0.04;
         var sat = hsv.s, val = hsv.v;
         if (e.key === "ArrowLeft") sat -= step;
@@ -925,7 +1039,7 @@
         else if (e.key === "ArrowDown") val -= step;
         else return;
         e.preventDefault();
-        applyHsv(cpHue, sat, val);
+        applyHsv(cpHues[cpSlot], sat, val);
       });
     }
     function keyNav(el, onStep) {
@@ -940,11 +1054,12 @@
       });
     }
     keyNav($("cpHue"), function (dir, big) {
-      var hsv = rgbToHsv(state.settings.red, state.settings.green, state.settings.blue);
+      var c = slotRGB(cpSlot);
+      var hsv = rgbToHsv(c.r, c.g, c.b);
       var live = hsv.v > 0.004;
-      applyHsv((cpHue + dir * (big ? 30 : 5) + 360) % 360, live ? hsv.s : 1, live ? hsv.v : 1);
+      applyHsv((cpHues[cpSlot] + dir * (big ? 30 : 5) + 360) % 360, live ? hsv.s : 1, live ? hsv.v : 1);
     });
-    keyNav($("cpAlpha"), function (dir, big) { setAlpha(state.settings.alpha + dir * (big ? 25 : 5)); });
+    keyNav($("cpAlpha"), function (dir, big) { setAlpha(slotRGB(cpSlot).a + dir * (big ? 25 : 5)); });
 
     // R / G / B / A 数值框
     [["nRed", "red"], ["nGreen", "green"], ["nBlue", "blue"]].forEach(function (pair) {
@@ -952,11 +1067,12 @@
       if (!input) return;
       function commit() {
         var v = parseFloat(input.value);
-        if (!isFinite(v)) { syncColorFromSettings(); return; }
+        if (!isFinite(v)) { syncColorUI(); return; }
         v = Math.max(0, Math.min(255, Math.round(v)));
-        if (pair[1] === "red") setColor(v, state.settings.green, state.settings.blue);
-        else if (pair[1] === "green") setColor(state.settings.red, v, state.settings.blue);
-        else setColor(state.settings.red, state.settings.green, v);
+        var c = slotRGB(cpSlot);
+        if (pair[1] === "red") setColor(v, c.g, c.b);
+        else if (pair[1] === "green") setColor(c.r, v, c.b);
+        else setColor(c.r, c.g, v);
       }
       input.addEventListener("change", commit);
       input.addEventListener("blur", commit);
@@ -968,7 +1084,7 @@
     if (alphaInput) {
       function commitAlpha() {
         var v = parseFloat(alphaInput.value);
-        if (!isFinite(v)) { syncColorFromSettings(); return; }
+        if (!isFinite(v)) { syncColorUI(); return; }
         setAlpha(v);
       }
       alphaInput.addEventListener("change", commitAlpha);
@@ -981,7 +1097,7 @@
     if (hexInput) {
       function commitHex() {
         var m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(hexInput.value).trim());
-        if (!m) { syncColorFromSettings(); return; }
+        if (!m) { syncColorUI(); return; }
         var h = m[1];
         if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
         setColor(parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16));
@@ -994,17 +1110,47 @@
     }
   }
 
-  // 描边：三态 + 描边颜色。关闭描边时颜色置灰（控制台也不会输出那四条命令）
+  // 二级调色盘的开合 / 定位 / 外点与滚动收起
+  function bindColorPopover() {
+    ["xhair", "outline"].forEach(function (slot) {
+      var btn = $(CP_SLOTS[slot].trigger);
+      if (!btn) return;
+      btn.addEventListener("click", function () { openColorPop(slot, btn); });
+    });
+    if ($("cpCancel")) $("cpCancel").addEventListener("click", function () { closeColorPop(true); });
+    if ($("cpAccept")) $("cpAccept").addEventListener("click", function () { closeColorPop(false); });
+    // 点弹层与两个色块之外 = 接受并关闭（保留刚才的调整）
+    document.addEventListener("pointerdown", function (e) {
+      if (!cpOpen) return;
+      var pop = $("cpPop");
+      if (pop && pop.contains(e.target)) return;
+      if ($("colorTrigger") && $("colorTrigger").contains(e.target)) return;
+      if ($("outlineColorTrigger") && $("outlineColorTrigger").contains(e.target)) return;
+      closeColorPop(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!cpOpen || e.key !== "Escape") return;
+      e.preventDefault();
+      closeColorPop(true);
+    });
+    // 固定定位的弹层在滚动 / 改窗口尺寸后会漂移：直接收起（保留当前选择）
+    window.addEventListener("scroll", function () { if (cpOpen) closeColorPop(false); }, { passive: true });
+    window.addEventListener("resize", function () { if (cpOpen) closeColorPop(false); });
+  }
+
+  // 描边：三态 + 描边颜色。关闭描边时颜色行置灰（控制台也不会输出那四条命令）
   function syncOutlineUI() {
     var s = state.settings;
     if (!s) return;
-    var mode = Number(s.outlineMode) || 0;
-    var off = mode === 0;
-    var host = $("outlineColorHost");
-    if (host) {
-      host.classList.toggle("is-dim", off);
-      host.querySelectorAll("input").forEach(function (i) { i.disabled = off; });
+    var off = (Number(s.outlineMode) || 0) === 0;
+    var row = $("outlineColorRow");
+    if (row) row.classList.toggle("is-dim", off);
+    var btn = $("outlineColorTrigger");
+    if (btn) {
+      btn.disabled = off;
+      if (off) btn.title = "无轮廓时没有可调的轮廓颜色";
     }
+    if (off && cpOpen && cpSlot === "outline") closeColorPop(false);
   }
 
   // gap 量程随样式变化：只有「2 动态十字(经典)」允许负值
@@ -1137,6 +1283,9 @@
 
   function applySettings(s, scroll, originalCode, info) {
     if (!s) return false;
+    // 外部整体换模型（导入 / 随机 / 重置 / 应用选手准星）时，先收掉调色盘，
+    // 否则它的「当前」快照会指向上一个准星。
+    closeColorPop(false);
     // 换模型前停掉动画：避免上一款准星的 spread/climb 残留到新样式上
     dynHardStop(false);
     state.settings = CS.normalizeModel(s);
@@ -1259,6 +1408,7 @@
       });
     });
     bindColorPicker();
+    bindColorPopover();
     // 样式：0-9 全部可选；切换后按新布局裁剪并刷新量程 / 可用态
     var styleSel = $("styleSel");
     styleSel.addEventListener("change", function () {

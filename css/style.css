@@ -292,8 +292,9 @@ main { position: relative; z-index: 1; }
     grid-template-rows: auto auto;
   }
   .gen-layout > .preview-panel { grid-area: preview; }
-  /* 行高由参数卡片决定：预览主体在卡片内垂直居中，两卡片底边对齐，左列不留空洞 */
-  .gen-layout > .preview-panel .preview-body { justify-content: center; }
+  /* 预览卡片不随右列参数高度伸缩：展开「开火分裂」只长参数列，预览尺寸恒定。
+     这一行是「展开折叠面板撑大实时预览」问题的根治点。 */
+  .gen-layout > .preview-panel { align-self: start; }
   .gen-layout > .settings-panel { grid-area: settings; }
   .gen-layout > .share-panel { grid-area: share; }
   /* 分享与导入通栏：两列并排（分享码 / 导入 ｜ 控制台命令），不再挤压成单列 */
@@ -302,26 +303,8 @@ main { position: relative; z-index: 1; }
   .gen-layout > .share-panel #cfgOutput { min-height: 148px; }
 }
 
-/* 参数面板：字段行 [标签 | 滑杆 | 数值] 三列网格（cs2util 式紧凑行）。
- * 标签列与数值列都是定宽 —— 多行参数纵向严格对齐（编辑排版）；
- * 滑杆列 minmax(160px, 1fr) —— 滑杆永远 ≥160px，任何控件都不会被别的控件挤压。 */
+/* 参数面板：游戏设置式行列表（左标签 / 右控件），行规则集中在第 8 节 */
 .settings-panel { display: flex; flex-direction: column; min-width: 0; }
-.settings-panel .field {
-  display: grid;
-  grid-template-columns: clamp(88px, 10vw, 116px) minmax(160px, 1fr) 54px;
-  align-items: center;
-  gap: var(--s3);
-  margin-bottom: 8px;
-}
-.settings-panel .field:last-child { margin-bottom: var(--s2); }
-.settings-panel .field > .field-head { display: contents; }
-.settings-panel .field > .field-head label { grid-column: 1; grid-row: 1; font-size: 13px; }
-.settings-panel .field > input[type="range"] { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; }
-.settings-panel .field .field-val { grid-column: 3; grid-row: 1; justify-self: end; }
-.settings-panel .field .val-edit { width: 100%; max-width: 54px; }
-
-/* 参数区内容限宽居中；≥1101px 桌面启用双列卡片网格（cs2util 式），≤1100px 单列纵叠 */
-.settings-panel > .groups { width: 100%; max-width: 720px; margin: 0 auto; }
 
 /* 分享与导入：双栏（分享码+导入 | 控制台命令），窄屏自动纵叠 */
 .share-panel { display: flex; flex-direction: column; min-width: 0; }
@@ -701,63 +684,171 @@ main { position: relative; z-index: 1; }
 .preview-actions .btn-primary { padding: 0 20px; }
 .preview-actions .btn-ico { font-size: 13px; }
 
-/* ---------- 8 参数面板 ---------- */
-/* 参数面板头部与内容网格同轴（双列卡片网格 1240px，见下方桌面媒体块） */
-.settings-panel { padding-bottom: 14px; }
+/* ---------- 8 参数面板：游戏设置式行列表 ----------
+ * 一行一个设置：[标签 左] [控件/数值 右]，行间发丝线分隔；没有分组标题、没有卡片。
+ * 展开「开火分裂」只是往列表里追加子行，不改变其它任何面板的高度。 */
+.settings-panel {
+  padding-bottom: 10px;
+  --row-h: 40px;
+  --row-label-w: clamp(112px, 13vw, 168px);
+}
+/* 面板头部与列表同宽同轴 */
 .settings-panel > .panel-head {
   width: 100%;
-  max-width: 1240px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 13px 24px;
+  padding: 12px 18px;
 }
 .settings-panel > .panel-head .panel-title { font-size: 17px; }
-/* 参数分组：≤1100px 单列纵叠、发丝线分隔；≥1101px 桌面为双列卡片网格（cs2util 式） */
-.groups { width: 100%; }
-.group {
-  padding: 18px 24px 14px;
-  min-width: 0;
-}
-.group + .group { border-top: 1px solid var(--hairline); }
-.group:first-child { padding-top: 10px; }
-.group-title {
+
+.settings-list {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
+}
+.settings-list > :last-child { border-bottom: 0; }
+
+/* 通用行：标签 | 控件 */
+.srow {
+  display: grid;
+  grid-template-columns: var(--row-label-w) minmax(0, 1fr);
   align-items: center;
   gap: var(--s3);
-  margin-bottom: 10px;
-  font-family: var(--font-ui);
-  font-size: 12.5px;
-  font-weight: 680;
-  letter-spacing: .08em;
-  text-transform: none;
-  color: var(--label-3);
+  min-height: var(--row-h);
+  padding: 0 18px;
+  border-bottom: 1px solid var(--hairline);
 }
-.group-title::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--hairline-strong), transparent);
+.srow-label {
+  font-size: 14px;
+  font-weight: 540;
+  color: var(--label-2);
+  letter-spacing: -.004em;
+}
+.srow-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+.srow.is-dim { opacity: .55; }
+
+/* 行内下拉：收到行尺度，右对齐 */
+.settings-list .select {
+  width: 100%;
+  max-width: 300px;
+  margin: 0;
+  padding: 9px 34px 9px 12px;
+  font-size: 13.5px;
+}
+/* 行内分段控件 */
+.settings-list .segmented {
+  width: 100%;
+  max-width: 330px;
+  margin: 0;
+  padding: 2px;
+}
+.settings-list .segmented button { padding: 7px 10px; font-size: 13px; }
+
+/* 滑杆行：[标签 | 滑杆 | 数值] 三列，标签列与通用行同宽 → 全局纵向对齐 */
+.settings-panel .field {
+  display: grid;
+  grid-template-columns: var(--row-label-w) minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: var(--s3);
+  margin: 0;
+  min-height: var(--row-h);
+  padding: 0 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+.settings-panel .field > .field-head { display: contents; }
+.settings-panel .field > .field-head label { grid-column: 1; grid-row: 1; font-size: 14px; }
+.settings-panel .field > input[type="range"] { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; }
+.settings-panel .field .field-val { grid-column: 3; grid-row: 1; justify-self: end; }
+.settings-panel .field .val-edit { width: 100%; max-width: 54px; }
+
+/* 开关行：复用 .srow 的标签列，只把控件收到右端 */
+.settings-list .switch-row {
+  display: grid;
+  grid-template-columns: var(--row-label-w) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s3);
+  min-height: var(--row-h);
+  margin: 0;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--hairline);
 }
 
-/* ≥1101px：双列卡片网格 —— 每组一张圆角描边卡片，滑杆/下拉/分段收到卡片尺度；
- * 「高级」组（group--wide）通栏收尾。排列：样式│颜色 / 轮廓│开关 / 高级。 */
-@media (min-width: 1101px) {
-  .settings-panel > .groups {
-    max-width: 1240px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto minmax(96px, 1fr);
-    align-content: start;
-    gap: 12px;
-  }
-  .settings-panel > .groups .group {
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-md);
-    background: var(--surface-2);
-    padding: 14px 16px 10px;
-  }
-  .settings-panel > .groups .group:first-child { padding-top: 15px; }
-  .settings-panel .group--wide { grid-column: 1 / -1; align-self: stretch; }
+/* 颜色行：色块按钮 —— 点开同一个二级调色盘（主色 / 轮廓色共用） */
+.color-trigger {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
+.color-trigger:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.color-trigger:hover .cp-chip { box-shadow: inset 0 0 0 1px var(--hairline-strong), 0 0 0 2px var(--accent-soft); }
+.color-trigger[disabled] { opacity: .35; cursor: not-allowed; }
+.color-trigger[disabled]:hover .cp-chip { box-shadow: inset 0 0 0 1px var(--hairline); }
+.cp-chip {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 26px;
+  background-color: #2a2a2a;
+  background-image: repeating-conic-gradient(#3c3c3c 0% 25%, #262626 0% 50%);
+  background-size: 8px 8px;
+  box-shadow: inset 0 0 0 1px var(--hairline-strong);
+}
+.cp-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--chip, #00ff00);
+  opacity: var(--chip-a, 1);
+}
+
+/* 高级「开火分裂」：折叠行 + 2×2 参数格（展开只多两行，尽量不改变右列高度） */
+.settings-list > .collapse {
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.settings-list > .collapse summary {
+  min-height: var(--row-h);
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 540;
+  color: var(--label-2);
+}
+.settings-list > .collapse summary .srow-label { flex: 1; }
+.settings-list > .collapse summary small {
+  margin-left: 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--label-4);
+}
+.settings-list > .collapse .collapse-body { padding: 0; }
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+  padding: 0 18px 8px;
+}
+.split-grid .field {
+  grid-template-columns: 92px minmax(0, 1fr) 44px;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+}
+.split-grid .field > .field-head label { font-size: 13px; }
 
 .field { margin-bottom: 12px; }
 .field:last-child { margin-bottom: var(--s2); }
@@ -874,56 +965,76 @@ input[type="range"][disabled] { cursor: not-allowed; }
   box-shadow: var(--shadow-1), inset 0 0 0 1px var(--hairline-strong);
 }
 
-.rgb-row {
-  display: grid;
-  /* 自适应换行：三格一行优先；单格不低于 100px（滑杆仍可拖），避免窄卡片掉成 2+1 */
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: var(--s2);
-  margin-bottom: var(--s3);
+/* 颜色不再用 RGB 三条滑杆：主色 / 轮廓色共用同一个二级调色盘（见下） */
+
+/* 调色盘（二级菜单）：点颜色行的色块弹出 —— 与游戏取色界面同构。
+ * 左：饱和度 × 明度方块（横向饱和度、纵向明度）+ 色相条 + 不透明度条；
+ * 右：新 / 当前两块对照 + R G B # A 数值框。没有候选色板。
+ * 拖动即时写回预览；取消回滚到打开时的值，接受只负责关闭。 */
+.cp-pop {
+  position: fixed;
+  z-index: 150;
+  width: 312px;
+  padding: 13px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: var(--shadow-3);
+  color: var(--label);
 }
-.rgb-cell {
-  padding: 10px 12px 6px;
-  border-radius: var(--r-md);
-  background: var(--fill-5);
+.cp-pop[hidden] { display: none; }
+.cp-pop-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.cp-pop-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 640;
+  letter-spacing: -.01em;
+  color: var(--label-2);
+}
+.cp-previews { display: flex; gap: 8px; }
+.cp-preview-box { display: flex; flex-direction: column; gap: 3px; }
+.cp-preview-box > span { font-size: 10.5px; letter-spacing: .04em; color: var(--label-4); }
+.cp-preview {
+  position: relative;
+  display: block;
+  width: 52px;
+  height: 24px;
+  background-color: #2a2a2a;
+  background-image: repeating-conic-gradient(#3c3c3c 0% 25%, #262626 0% 50%);
+  background-size: 8px 8px;
   box-shadow: inset 0 0 0 1px var(--hairline);
 }
-.rgb-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  color: var(--label-3);
+.cp-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--chip, #000);
+  opacity: var(--chip-a, 1);
 }
-.rgb-cell.r .rgb-label { color: var(--rgb-r); }
-.rgb-cell.g .rgb-label { color: var(--rgb-g); }
-.rgb-cell.b .rgb-label { color: var(--rgb-b); }
-.rgb-cell input[type="range"] { height: 22px; }
-.rgb-cell input[type="range"]::-webkit-slider-runnable-track { height: 4px; }
-.rgb-cell input[type="range"]::-webkit-slider-thumb { width: 10px; height: 16px; margin-top: -6px; }
-.rgb-val {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--label-2);
-  text-align: right;
-}
-
-/* 调色盘：与游戏里的取色界面同构，但直接内嵌在参数卡片里 —— 不做二级菜单、没有候选色。
- * 左：饱和度 × 明度方块（横向 = 饱和度，纵向 = 明度）+ 色相条 + 不透明度条；
- * 右：R G B # A 五个数值框。改动即时生效，没有「确定 / 取消」。 */
-.cp-inline {
+.cp-pop-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 168px;
-  gap: var(--s3);
+  grid-template-columns: minmax(0, 1fr) 118px;
+  gap: 12px;
   align-items: start;
+}
+.cp-pop-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
 }
 .cp-stack { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
 .cp-sv {
   position: relative;
-  height: 152px;
+  height: 146px;
   cursor: crosshair;
   touch-action: none;
   outline: none;
@@ -974,7 +1085,7 @@ input[type="range"][disabled] { cursor: not-allowed; }
 
 /* 右侧：R G B # A 一列排开（游戏对话框的右半部分） */
 .cp-pane { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.cp-field { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.cp-field { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .cp-field > span {
   width: 12px;
   flex: none;
@@ -990,8 +1101,8 @@ input[type="range"][disabled] { cursor: not-allowed; }
 .cp-field input {
   flex: 1;
   min-width: 0;
-  height: 28px;
-  padding: 0 8px;
+  height: 26px;
+  padding: 0 7px;
   border: 0;
   border-radius: 0;
   background: var(--input-bg);
@@ -2464,7 +2575,6 @@ input[type="range"][disabled] { cursor: not-allowed; }
   .players-toolbar { position: static; }
 }
 @media (max-width: 860px) {
-  .group + .group { border-top: 1px solid var(--hairline); }
   .share-body { grid-template-columns: minmax(0, 1fr); }
   .share-col + .share-col { border-left: 0; border-top: 1px solid var(--hairline); }
   .preview-panel .panel-head { flex-wrap: wrap; row-gap: 8px; }
@@ -2503,35 +2613,53 @@ input[type="range"][disabled] { cursor: not-allowed; }
   .switch { width: 52px; height: 32px; }
   .switch .track::after { width: 26px; height: 26px; top: 3px; left: 3px; }
   .switch input:checked + .track::after { transform: translateX(20px); }
+  /* 调色盘改为贴底抽屉：视口太窄时固定尺寸弹层会顶出屏幕 */
+  .cp-pop {
+    left: 10px;
+    right: 10px;
+    top: auto;
+    bottom: 10px;
+    width: auto;
+    max-height: 84vh;
+    overflow-y: auto;
+  }
 }
 @media (max-width: 620px) {
   .stage-rail { flex-direction: column; align-items: stretch; gap: 8px; }
   .map-rail { flex-wrap: wrap; }
-  .rgb-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-  /* 调色盘在窄屏改上下排：色带在上、色块与数值框在下 */
-  .cp-inline { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
-  .cp-sv { height: 148px; }
-  /* 窄屏：R G B 三个一行，# 占两格 + A 一格，凑满第二行不落单 */
-  .cp-pane { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .cp-field-wide { grid-column: span 2; }
+  /* 窄屏参数行改成上下两行式：标签 / 控件各占一整行，滑杆不被挤压 */
+  .srow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    padding: 12px 14px;
+  }
+  .srow-ctrl { justify-content: flex-start; }
+  .settings-list .select,
+  .settings-list .segmented { max-width: none; }
+  .settings-list .switch-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 10px 14px;
+  }
+  .settings-panel .field {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 10px;
+    padding: 10px 14px;
+    min-height: 0;
+  }
+  .settings-panel .field > .field-head label { grid-column: 1; }
+  .settings-panel .field .field-val { grid-column: 2; }
+  .settings-panel .field > input[type="range"] { grid-column: 1 / -1; grid-row: 2; }
+  .split-grid { grid-template-columns: minmax(0, 1fr); padding: 0 14px 6px; }
+  .settings-list > .collapse summary { padding: 0 14px; }
   .hist-entry { flex-wrap: wrap; }
   .h-actions { width: 100%; justify-content: flex-end; }
-  .group { padding: var(--s3) var(--s4) var(--s1); }
   .share-col { padding: var(--s4); }
   .players-grid { gap: 10px; }
   .team-group-body { grid-template-columns: minmax(0, 1fr); padding: 0 11px 12px; }
   .ps-item { min-width: 74px; padding: 7px 13px; }
   .ps-item b { font-size: 18px; }
   .td-lineup { grid-template-columns: minmax(0, 1fr); }
-  /* 窄屏参数行改为两行式：[标签 | 数值] + 整行滑杆，滑杆仍占满一行不被挤压 */
-  .settings-panel .field {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--s1) var(--s2);
-    margin-bottom: 12px;
-  }
-  .settings-panel .field > .field-head label { grid-column: 1; }
-  .settings-panel .field .field-val { grid-column: 2; }
-  .settings-panel .field > input[type="range"] { grid-column: 1 / -1; grid-row: 2; }
 }
 
 /* 超窄屏（≤420px）：顶栏 brand 副标题隐藏、页签收紧，保证一行放下且不换行 */

@@ -187,7 +187,8 @@ const closeIfOpen = () => { if (!$("playerModal").hidden) click($("modalClose"))
   // Apple 式去冗余：样式角标/HUD 读数条/色块都与参数区重复，整体移除
   ok(!$("stageMeta") && !q(".stage-meta"), "「当前样式」角标已移除（与样式下拉重复）");
   ok(!$("previewHud") && !q(".preview-hud"), "HUD 参数读数条已移除（与参数区逐项重复）");
-  ok(!$("colorChip") && !q(".color-swatch"), "46px 色块已移除（当前颜色由预览与选中环表达）");
+  ok(!q(".color-swatch"), "旧的 46px 独立色块已移除（当前颜色只在参数行的色块按钮里表达）");
+  ok(!!$("colorChip") && !!$("outlineColorChip"), "主色 / 轮廓色各有一个行内色块按钮");
   ok(!$("stageScale"), "冗余的像素口径文案已移除（无 #stageScale）");
   ok(!$("viewHeightSel") && !$("screenHeight") && !$("arSeg") && !$("zoomSeg"),
     "不提供预览高度 / 宽高比模拟控件");
@@ -408,44 +409,61 @@ const closeIfOpen = () => { if (!$("playerModal").hidden) click($("modalClose"))
   styleSel.value = "4";
   fire(styleSel, "change");
 
-  section("⑥ 描边三态与描边 RGBA 滑杆联动");
+  section("⑥ 轮廓三态 + 轮廓颜色走同一个二级调色盘");
   const oBtns = qa("#outlineSeg button");
   ok(oBtns.length === 3, "描边分段按钮 " + oBtns.length + " 个：" + oBtns.map((b) => b.textContent).join("/"));
-  ok(["sOR", "sOG", "sOB", "sOA"].every((id) => !!$(id)), "描边 RGBA 四个滑杆存在（sOR/sOG/sOB/sOA）");
+  ok(!$("sOR") && !$("sOG") && !$("sOB") && !$("sOA"), "轮廓颜色不再用四条 RGB 滑杆");
   const outlineCmd = () => cmdNames($("cfgOutput").value);
   click(oBtns.find((b) => b.dataset.outline === "0"));
   ok(outlineCmd().indexOf("cl_crosshairoutline_r") === -1, "无描边：命令里没有描边颜色");
-  ok($("outlineColorHost").classList.contains("is-dim"), "无描边：描边颜色置灰");
-  ok($("sOR").disabled === true, "无描边：描边滑杆 disabled");
+  ok($("outlineColorRow").classList.contains("is-dim"), "无描边：轮廓颜色行置灰");
+  ok($("outlineColorTrigger").disabled === true, "无描边：轮廓颜色按钮不可点");
+  click($("outlineColorTrigger"));
+  ok($("cpPop").hidden === true, "无描边时点轮廓色不会打开调色盘");
   click(oBtns.find((b) => b.dataset.outline === "1"));
-  // 最小完备语义：默认黑色描边色与游戏出厂一致 → 单行粘贴里省略；拖动滑杆后条件恢复（下方 200 断言）
+  // 最小完备语义：默认黑色描边色与游戏出厂一致 → 单行粘贴里省略；改色后条件恢复
   ok(outlineCmd().indexOf("cl_crosshairoutline_r") === -1, "全描边 + 默认黑描边色：单行命令省略描边颜色（条件输出）");
-  ok($("sOR").disabled === false, "全描边：滑杆恢复可用");
+  ok($("outlineColorTrigger").disabled === false, "全描边：轮廓颜色按钮恢复可用");
   ok($("outlineSeg").querySelector('button[data-outline="1"]').classList.contains("active"), "完整轮廓按钮处于选中态");
-  $("sOR").value = "200";
-  fire($("sOR"), "input");
-  ok(/cl_crosshairoutline_r 200/.test($("cfgOutput").value), "拖动描边 R 滑杆 → 命令同步为 200");
-  ok($("vOR").textContent === "200", "数值徽标同步：" + $("vOR").textContent);
+  click($("outlineColorTrigger"));
+  ok($("cpPop").hidden === false && /轮廓/.test($("cpPopTitle").textContent),
+    "点轮廓色块打开同一个二级调色盘：" + $("cpPopTitle").textContent);
+  ok($("outlineColorTrigger").getAttribute("aria-expanded") === "true", "打开时 aria-expanded=true");
+  $("nGreen").value = "128";
+  fire($("nGreen"), "change");
+  ok(/cl_crosshairoutline_g 128/.test($("cfgOutput").value), "轮廓 G 数值框 → 命令同步为 128");
+  click($("cpCancel"));
+  ok($("cpPop").hidden === true && $("outlineColorTrigger").getAttribute("aria-expanded") === "false",
+    "取消关闭调色盘并复位 aria-expanded");
+  ok(outlineCmd().indexOf("cl_crosshairoutline_g") === -1, "取消把轮廓色回滚到打开前的默认黑");
   click(oBtns.find((b) => b.dataset.outline === "2"));
   ok($("cfgOutput").value.indexOf("cl_crosshair_drawoutline 2") > -1, "半描边：drawoutline = 2");
   ok($("outlineSeg").querySelector('button[data-outline="2"]').classList.contains("active"), "半轮廓按钮处于选中态");
   click(oBtns.find((b) => b.dataset.outline === "1"));
-  // 颜色控件：游戏同款调色盘，直接内嵌在参数面板里（不是二级菜单）
-  section("⑥.1 颜色控件：内嵌的游戏同款调色盘（无二级菜单 / 无候选色）");
-  ok(qa("#xhairPalette, .color-palette, [data-rgb]").length === 0, "候选色板已移除（无 #xhairPalette / .color-palette）");
+
+  section("⑥.1 颜色控件：主色 / 轮廓色共用同一个二级调色盘（游戏同构）");
+  ok(qa("#xhairPalette, .color-palette, [data-rgb], .rgb-row, .cp-inline").length === 0,
+    "候选色板 / RGB 滑杆行 / 内嵌调色盘都已移除");
   ok(!$("sRed") && !$("sGreen") && !$("sBlue") && !$("sValue") && !$("sAlpha"),
     "旧滑杆全部移除（无 sRed/sGreen/sBlue/sValue/sAlpha）");
-  ok(!$("cpDialog") && !$("cpTrigger") && !$("cpAccept") && !$("cpCancel"),
-    "不再有二级菜单（无 #cpDialog / #cpTrigger / 取消-接受按钮）");
-  ok($("cpSV").closest(".settings-panel") !== null, "调色盘直接嵌在参数面板里（不是浮层）");
+  ok($("cpPop").hidden === true, "二级调色盘默认收起（不在参数面板里常驻）");
+  ok(!!$("colorChip") && !!$("outlineColorChip") && qa(".settings-list .cp-chip").length === 2,
+    "两个颜色行各用一个色块按钮表达当前颜色");
+  ok($("cpPop").closest(".settings-panel") === null, "调色盘是浮层，不占参数列表高度");
   ok(!!$("cpSV") && !!$("cpHue") && !!$("cpAlpha"), "调色盘有 SV 方块 + 色相条 + 不透明度条");
   ok(["nRed", "nGreen", "nBlue", "nAlpha", "cpHexInput"].every((id) => !!$(id)),
     "调色盘有 R/G/B/#/A 五个数值框");
+  ok(!!$("cpNew") && !!$("cpCur"), "弹层有「新 / 当前」两格对照");
   ok($("cpSV").getAttribute("role") === "slider" && $("cpSV").getAttribute("tabindex") === "0",
     "SV 方块可键盘操作（role=slider + tabindex=0）");
   ok($("cpHue").getAttribute("role") === "slider" && $("cpAlpha").getAttribute("role") === "slider",
     "色相条 / 不透明度条也是 slider");
-  // 数值框 → 命令 / 十六进制同步（没有「确定」，改完立即生效）
+  // 打开主色调色盘：标题 / 焦点 / 展开态
+  click($("colorTrigger"));
+  ok($("cpPop").hidden === false && $("cpPopTitle").textContent === "颜色和透明度", "点色块打开主色调色盘");
+  ok($("colorTrigger").getAttribute("aria-expanded") === "true", "主色按钮 aria-expanded=true");
+  ok(document.activeElement === $("nRed"), "打开后焦点进入 R 数值框");
+  // 数值框 → 命令 / 十六进制同步（改完立即生效，预览实时）
   $("nRed").value = "255"; fire($("nRed"), "change");
   $("nGreen").value = "0"; fire($("nGreen"), "change");
   $("nBlue").value = "0"; fire($("nBlue"), "change");
@@ -468,10 +486,26 @@ const closeIfOpen = () => { if (!$("playerModal").hidden) click($("modalClose"))
   $("cpHexInput").value = "#00ff00"; fire($("cpHexInput"), "change");
   ok(/cl_crosshaircolor_r 0/.test($("cfgOutput").value) && /cl_crosshaircolor_g 255/.test($("cfgOutput").value) &&
     $("cpHexInput").value === "#00FF00", "十六进制输入 → 颜色同步：" + $("cpHexInput").value);
-  // 复位到默认准星绿 + 满不透明度，后续用例从已知状态继续
+  // Esc：取消并回滚到打开前
   $("nAlpha").value = "255"; fire($("nAlpha"), "change");
-  ok(/cl_crosshaircolor_a 255/.test($("cfgOutput").value) && $("cpHexInput").value === "#00FF00",
-    "复位为绿色 / 不透明度 255：" + $("cpHexInput").value);
+  $("nBlue").value = "30"; fire($("nBlue"), "change");
+  ok(/cl_crosshaircolor_b 30/.test($("cfgOutput").value), "改 B=30 即时生效");
+  fire(document, "keydown", { key: "Escape" });
+  ok($("cpPop").hidden === true, "Esc 关闭调色盘");
+  ok(/cl_crosshaircolor_b 0/.test($("cfgOutput").value) && /cl_crosshaircolor_a 255/.test($("cfgOutput").value),
+    "Esc 回滚到打开前的颜色 / 不透明度");
+  // 接受：改完点「接受」保留
+  click($("colorTrigger"));
+  $("nBlue").value = "9"; fire($("nBlue"), "change");
+  click($("cpAccept"));
+  ok($("cpPop").hidden === true && /cl_crosshaircolor_b 9/.test($("cfgOutput").value), "「接受」关闭并保留调整");
+  // 复位到已知状态（绿），后续用例继续
+  click($("colorTrigger"));
+  $("cpHexInput").value = "#00ff00"; fire($("cpHexInput"), "change");
+  $("nAlpha").value = "255"; fire($("nAlpha"), "change");
+  click($("cpAccept"));
+  ok(/cl_crosshaircolor_r 0/.test($("cfgOutput").value) && /cl_crosshaircolor_g 255/.test($("cfgOutput").value) &&
+    /cl_crosshaircolor_a 255/.test($("cfgOutput").value), "复位为绿色 / 不透明度 255：" + $("cpHexInput").value);
 
   section("⑦ 分享码输出 + CSGO- 旧码导入提示");
   const importInput = $("importInput");
