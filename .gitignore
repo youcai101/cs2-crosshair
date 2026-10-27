@@ -1,0 +1,43 @@
+# 依赖 / 临时
+.preview/
+.cache/
+.npm-cache/
+_acl-report/
+.wtest-root
+.tmp-*.js
+_oracle/
+node_modules/
+.tmp-edge*/
+.tmp-shot/
+.tmp-verify/
+*.tmp
+
+# 浏览器 profile（远程调试用，动辄上 GB）
+.tmp-edge/
+.tmp-edge2/
+.tmp-edge3/
+.tmp-edge-profile/
+
+# 编辑器 / 代理运行目录
+.zcode/
+.workbuddy/
+
+# 数据抓取缓存与日志（体积大，可随时重建）
+tools/cache/
+tools/logs/
+*.log
+
+# 发布产物（tools/build-dist.js 生成）
+cs2-crosshair/
+
+# 未被页面引用的旧队标素材 / 调试脚本
+team/
+tools/_probe/
+
+# 验证截图（由 test/shots-run.js 生成，可随时重拍）
+test/shots/
+
+# 系统
+Thumbs.db
+desktop.ini
+.DS_Store

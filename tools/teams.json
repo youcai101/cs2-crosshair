@@ -1,0 +1,192 @@
+{
+  "version": 2,
+  "rosterLimit": 6,
+  "autoAddTeams": true,
+  "autoAddMinPlayers": 6,
+  "maxTeams": 64,
+  "excludePattern": "free agent|retired|content creator|academy|\\bjr\\b|\\bnxt\\b|impact|\\bfe\\b|female|streamer|unemployed",
+  "teams": [
+    {
+      "k": "falcons",
+      "n": "Falcons",
+      "site": "Falcons Esports",
+      "logo": "assets/teams/falcons.png"
+    },
+    {
+      "k": "spirit",
+      "n": "Team Spirit",
+      "site": "Team Spirit",
+      "logo": "assets/teams/spirit.png"
+    },
+    {
+      "k": "furia",
+      "n": "FURIA",
+      "site": "FURIA",
+      "logo": "assets/teams/furia.png"
+    },
+    {
+      "k": "vitality",
+      "n": "Vitality",
+      "site": "Team Vitality",
+      "logo": "assets/teams/vitality.png"
+    },
+    {
+      "k": "mouz",
+      "n": "MOUZ",
+      "site": "MOUZ",
+      "logo": "assets/teams/mouz.png"
+    },
+    {
+      "k": "navi",
+      "n": "NAVI",
+      "site": "Natus Vincere",
+      "logo": "assets/teams/navi.png"
+    },
+    {
+      "k": "9z",
+      "n": "9z",
+      "site": "9z Team",
+      "logo": "assets/teams/9z.png"
+    },
+    {
+      "k": "aurora",
+      "n": "Aurora",
+      "site": "Aurora",
+      "logo": "assets/teams/aurora.png"
+    },
+    {
+      "k": "faze",
+      "n": "FaZe",
+      "site": "FaZe Clan",
+      "logo": "assets/teams/faze.png"
+    },
+    {
+      "k": "g2",
+      "n": "G2",
+      "site": "G2 Esports",
+      "logo": "assets/teams/g2.png"
+    },
+    {
+      "k": "astralis",
+      "n": "Astralis",
+      "site": "Astralis",
+      "logo": "assets/teams/astralis.png"
+    },
+    {
+      "k": "betboom",
+      "n": "BetBoom",
+      "site": "BetBoom Team",
+      "logo": "assets/teams/betboom.png"
+    },
+    {
+      "k": "mongolz",
+      "n": "The MongolZ",
+      "site": "The Mongolz",
+      "logo": "assets/teams/mongolz.png"
+    },
+    {
+      "k": "parivision",
+      "n": "PARIVISION",
+      "site": "PARIVISION",
+      "logo": "assets/teams/parivision.png"
+    },
+    {
+      "k": "legacy",
+      "n": "Legacy",
+      "site": "Legacy",
+      "logo": "assets/teams/legacy.png"
+    },
+    {
+      "k": "pain",
+      "n": "paiN",
+      "site": "paiN Gaming",
+      "logo": "assets/teams/pain.png"
+    },
+    {
+      "k": "fut",
+      "n": "FUT",
+      "site": "FUT Esports",
+      "logo": "assets/teams/fut.png"
+    },
+    {
+      "k": "big",
+      "n": "BIG",
+      "site": "BIG",
+      "logo": "assets/teams/big.png"
+    },
+    {
+      "k": "b8",
+      "n": "B8",
+      "site": "B8 Esports",
+      "logo": "assets/teams/b8.png"
+    },
+    {
+      "k": "liquid",
+      "n": "Liquid",
+      "site": "Team Liquid",
+      "logo": "assets/teams/liquid.png"
+    },
+    {
+      "k": "tyloo",
+      "n": "TYLOO",
+      "site": "TyLoo",
+      "logo": "assets/teams/tyloo.png"
+    },
+    {
+      "k": "gamerlegion",
+      "n": "GamerLegion",
+      "site": "GamerLegion",
+      "logo": "assets/teams/gamerlegion.png"
+    },
+    {
+      "k": "mibr",
+      "n": "MIBR",
+      "site": "MIBR",
+      "logo": "assets/teams/mibr.png"
+    },
+    {
+      "k": "nip",
+      "n": "NiP",
+      "site": "Ninjas in Pyjamas",
+      "logo": "assets/teams/nip.png"
+    },
+    {
+      "k": "heroic",
+      "n": "HEROIC",
+      "site": "HEROIC",
+      "logo": "assets/teams/heroic.png"
+    },
+    {
+      "k": "lvg",
+      "n": "LVG",
+      "site": "Lynn Vision",
+      "logo": "assets/teams/lvg.png"
+    },
+    {
+      "k": "m80",
+      "n": "M80",
+      "site": "M80",
+      "logo": "assets/teams/m80.png"
+    },
+    {
+      "k": "flyquest",
+      "n": "FlyQuest",
+      "site": "FlyQuest",
+      "logo": "assets/teams/flyquest.png"
+    },
+    {
+      "k": "nrg",
+      "n": "NRG",
+      "site": "NRG",
+      "auto": true,
+      "logo": "assets/teams/nrg.png"
+    },
+    {
+      "k": "rareatom",
+      "n": "Rare Atom",
+      "site": "Rare Atom",
+      "auto": true,
+      "logo": "assets/teams/rareatom.png"
+    }
+  ]
+}

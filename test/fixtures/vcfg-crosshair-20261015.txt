@@ -1,0 +1,36 @@
+# 实机 convar 快照（只读取得，未修改任何设置）
+# 来源: d:\software\steam\userdata\886924967\730\local\cfg\cs2_user_convars_0_slot0.vcfg
+# mtime: 2026-10-15T15:31:58.837Z · cs2 进程启动: 2026-10-15T23:27:53.5838906+08:00
+# 客户端: 1.41.9.1 (ClientVersion 2000932, Oct 14 2026)
+# 分辨率: 1280 x 960
+# 账号: 886924967
+
+cl_crosshair_drawoutline 0
+cl_crosshair_dynamic_maxdist_splitratio 1
+cl_crosshair_dynamic_splitalpha_innermod 1
+cl_crosshair_dynamic_splitalpha_outermod 0.5
+cl_crosshair_dynamic_splitdist 6
+cl_crosshair_dynamic_spread_limit 227
+cl_crosshair_gap 6
+cl_crosshair_length 6
+cl_crosshair_recoil false
+cl_crosshair_screen_height 960
+cl_crosshair_sniper_width 0
+cl_crosshair_t false
+cl_crosshair_thickness 2
+cl_crosshairalpha 255
+cl_crosshaircolor_a 255
+cl_crosshaircolor_b 0
+cl_crosshaircolor_g 255
+cl_crosshaircolor_r 0
+cl_crosshairdot false
+cl_crosshairoutline_a 255
+cl_crosshairoutline_b 0
+cl_crosshairoutline_g 0
+cl_crosshairoutline_r 0
+cl_crosshairsize 2
+cl_crosshairstyle 4
+cl_crosshairthickness 0.5
+cl_ironsight_dot_scale 1
+cl_ironsight_usecrosshaircolor false
+crosshair true

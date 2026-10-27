@@ -1,190 +1,251 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Showkey · CS2 准星工坊</title>
-<meta name="description" content="CS2 准星生成器与职业选手准星库：实时预览、分享码/CFG 互转、31 支战队现役选手准星。">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff7a18'/><path d='M50 24v11M50 65v11M24 50h11M65 50h11' stroke='%23100a02' stroke-width='10' stroke-linecap='round'/><circle cx='50' cy='50' r='5' fill='%23100a02'/></svg>">
-<link rel="stylesheet" href="css/style.css?v=18">
+<meta name="description" content="逐像素对齐 CS2 2026 新版准星系统：10 种样式、像素刻度参数、实时 1:1 预览、分享码与控制台命令生成，以及 170 位职业选手准星库。">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='2' fill='%2300ff87'/%3E%3Cpath d='M12 5v4M12 15v4M5 12h4M15 12h4' stroke='%2305271a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css?v=3680011">
 </head>
 <body>
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="#" onclick="return false">
-      <span class="brand-logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5v3.5M12 17v3.5M3.5 12H7M17 12h3.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
+    <a class="brand" href="#" aria-label="Showkey 首页">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 3v5M12 16v5M3 12h5M16 12h5"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+        </svg>
       </span>
-      <span class="brand-name">SHOWKEY<small>CS2 准星工坊</small></span>
+      <h1 class="brand-name">SHOWKEY<span class="brand-sub">CS2 准星工坊</span></h1>
     </a>
-    <nav class="tabs" id="viewTabs">
-      <button class="tab active" data-view="generator">准星生成器</button>
-      <button class="tab" data-view="pros">选手准星</button>
-      <button class="tab" data-view="convert">分享码互转</button>
+    <nav class="tabs" id="viewTabs" role="tablist" aria-label="主导航">
+      <button class="tab active" id="tab-generator" data-view="generator" role="tab" aria-selected="true" aria-controls="view-generator" tabindex="0">生成器</button>
+      <button class="tab" id="tab-pros" data-view="pros" role="tab" aria-selected="false" aria-controls="view-pros" tabindex="-1">选手准星</button>
     </nav>
-    <div class="nav-right">
-      <button class="theme-btn" id="themeBtn" title="切换白天/黑夜模式">🌙</button>
-    </div>
   </div>
 </header>
 
 <main>
-  <!-- ============ 视图 1：准星生成器 ============ -->
-  <section class="view" id="view-generator">
+
+  <!-- ============ 视图 1：生成器 ============ -->
+  <section class="view" id="view-generator" role="tabpanel" aria-labelledby="tab-generator">
     <div class="gen-layout">
-      <div class="gen-left">
-        <div class="panel">
-          <div class="panel-head">
-            <span class="panel-title">实时预览</span>
-            <div class="map-switch">
-              <button id="bgPrev" title="上一张地图">‹</button>
-              <span id="mapName">Dust2</span>
-              <button id="bgNext" title="下一张地图">›</button>
-            </div>
-          </div>
-          <div class="preview-stage" id="previewStage">
-            <img id="bgImg" src="assets/bg-dust2.webp" alt="">
-            <canvas id="previewCanvas"></canvas>
-            <div class="preview-hud" id="previewHud"></div>
-            <div class="recoil-chip" id="recoilChip">开火后坐力</div>
+
+      <!-- 预览：页面第一视觉主体，置顶且尺寸最大 -->
+      <div class="panel preview-panel">
+        <div class="panel-head">
+          <div class="ph-left">
+            <h2 class="panel-title">实时预览</h2>
           </div>
           <div class="preview-actions">
-            <button class="btn btn-ghost btn-sm" id="btnRecoil">模拟开火</button>
-            <button class="btn btn-ghost btn-sm" id="btnReset">重置默认</button>
+            <div class="pa-group">
+              <button class="btn btn-ghost" id="btnRecoil"><span class="btn-ico">▶</span>动态预览</button>
+              <button class="btn btn-ghost btn-icon" id="btnRandom" title="随机准星" aria-label="随机准星">⚄</button>
+              <button class="btn btn-ghost btn-icon" id="btnReset" title="重置为默认准星" aria-label="重置为默认准星">↺</button>
+            </div>
+            <div class="pa-group pa-group-primary">
+              <button class="btn btn-primary" id="btnQuickCopy">复制分享码</button>
+            </div>
           </div>
         </div>
-
-        <div class="panel">
-          <div class="panel-head">
-            <span class="panel-title">分享码</span>
-            <span class="panel-hint">游戏内：设置 → 准星 → 导入分享码</span>
+        <div class="notice-bar" id="legacyNotice" hidden></div>
+        <div class="preview-body">
+          <div class="preview-stage" id="previewStage" tabindex="0" aria-label="准星实时预览">
+            <img id="bgImg" src="assets/bg-dust2.webp" alt="">
+            <canvas id="previewCanvas"></canvas>
+            <div class="fire-meter" id="fireMeter">
+              <span id="fmLabel">SPREAD</span>
+              <span class="fm-track"><i id="fmBar"></i></span>
+              <b id="fmVal">0%</b>
+            </div>
+            <div class="recoil-chip" id="recoilChip">开火中</div>
+            <div class="stage-hint" id="stageHint" hidden>按住舞台 = 连发演示</div>
+            <button class="stage-arrow left" id="bgPrev" aria-label="上一张背景">‹</button>
+            <button class="stage-arrow right" id="bgNext" aria-label="下一张背景">›</button>
           </div>
-          <div class="code-row">
-            <input id="shareCodeInput" spellcheck="false" autocomplete="off" placeholder="CSGO-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX">
-            <button class="btn btn-primary" id="btnCopyCode">复制</button>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-ghost" id="btnImportCode">导入分享码</button>
-            <button class="btn btn-ghost" id="btnCopyCfg">复制 CFG</button>
+          <div class="stage-rail">
+            <div class="map-rail" id="mapDots"></div>
           </div>
         </div>
       </div>
 
       <div class="panel settings-panel">
-        <div class="panel-head"><span class="panel-title">准星参数</span></div>
+          <div class="panel-head">
+            <h2 class="panel-title">准星参数</h2>
+          </div>
+          <div class="groups">
 
-        <div class="group">
-          <div class="group-title">样式</div>
-          <div class="segmented" id="styleSeg">
-            <button data-style="0">经典</button>
-            <button data-style="1">传统</button>
-            <button data-style="2">经典静态</button>
+            <div class="group">
+              <div class="group-title">样式设置</div>
+              <select class="select" id="styleSel" aria-label="准星样式"></select>
+              <div class="field">
+                <div class="field-head"><label for="sLength" title="cl_crosshair_length">长度</label><span class="field-val" id="vLength">11</span></div>
+                <input type="range" id="sLength" min="0" max="255" step="1" value="11">
+              </div>
+              <div class="field">
+                <div class="field-head"><label for="sThickness" title="cl_crosshair_thickness">粗细</label><span class="field-val" id="vThickness">2</span></div>
+                <input type="range" id="sThickness" min="0" max="32" step="1" value="2">
+              </div>
+              <div class="field">
+                <div class="field-head"><label for="sGap" title="cl_crosshair_gap">间隙</label><span class="field-val" id="vGap">7</span></div>
+                <input type="range" id="sGap" min="0" max="128" step="1" value="7">
+              </div>
+              <div class="field" id="spreadField">
+                <div class="field-head"><label for="sSpread" title="cl_crosshair_dynamic_spread_limit">动态扩散限制</label><span class="field-val" id="vSpread">255</span></div>
+                <input type="range" id="sSpread" min="0" max="255" step="1" value="255">
+              </div>
+            </div>
+
+            <div class="group">
+              <div class="group-title">颜色和透明度</div>
+              <button class="cp-trigger" id="cpTrigger" type="button" aria-haspopup="dialog" aria-controls="cpDialog" aria-label="打开调色盘">
+                <i class="cp-chip" id="cpChip" aria-hidden="true"></i>
+                <span class="cp-trigger-hex" id="cpHex">#00FF00</span>
+                <span class="cp-trigger-alpha">不透明度 <b id="cpAlphaText">255</b></span>
+                <span class="cp-trigger-go" aria-hidden="true">调色</span>
+              </button>
+            </div>
+
+            <div class="group">
+              <div class="group-title">轮廓</div>
+              <div class="segmented" id="outlineSeg">
+                <button data-outline="0" title="cl_crosshair_drawoutline 0 · 不描边">无轮廓</button>
+                <button data-outline="1" title="cl_crosshair_drawoutline 1 · 四边都描 1px">完整轮廓</button>
+                <button data-outline="2" title="cl_crosshair_drawoutline 2 · 只描轮廓左上部分">半轮廓</button>
+              </div>
+              <div id="outlineColorHost">
+                <div class="rgb-row">
+                  <div class="rgb-cell r">
+                    <span class="rgb-label">轮廓 R</span>
+                    <input type="range" id="sOR" min="0" max="255" step="1" value="0" aria-label="轮廓颜色 R">
+                    <span class="rgb-val" id="vOR">0</span>
+                  </div>
+                  <div class="rgb-cell g">
+                    <span class="rgb-label">轮廓 G</span>
+                    <input type="range" id="sOG" min="0" max="255" step="1" value="0" aria-label="轮廓颜色 G">
+                    <span class="rgb-val" id="vOG">0</span>
+                  </div>
+                  <div class="rgb-cell b">
+                    <span class="rgb-label">轮廓 B</span>
+                    <input type="range" id="sOB" min="0" max="255" step="1" value="0" aria-label="轮廓颜色 B">
+                    <span class="rgb-val" id="vOB">0</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="field-head"><label for="sOA" title="cl_crosshairoutline_a">轮廓不透明度</label><span class="field-val" id="vOA">255</span></div>
+                  <input type="range" id="sOA" min="0" max="255" step="1" value="255">
+                </div>
+              </div>
+            </div>
+
+            <div class="group">
+              <div class="group-title">开关</div>
+              <div class="switch-row">
+                <span title="cl_crosshairdot">中心点</span>
+                <label class="switch"><input type="checkbox" id="sDot"><span class="track"></span></label>
+              </div>
+              <div class="switch-row">
+                <span title="cl_crosshair_t">T 形准星</span>
+                <label class="switch"><input type="checkbox" id="sT"><span class="track"></span></label>
+              </div>
+              <div class="switch-row" id="recoilRow">
+                <span title="cl_crosshair_recoil">跟随后坐力（仅动态样式）</span>
+                <label class="switch"><input type="checkbox" id="sRecoil"><span class="track"></span></label>
+              </div>
+            </div>
+
+            <div class="group group--wide">
+              <div class="group-title">高级</div>
+              <details class="collapse" id="splitCollapse">
+                <summary>开火分裂</summary>
+                <div class="collapse-body">
+                  <div class="field">
+                    <div class="field-head"><label for="sSplitDist" title="cl_crosshair_dynamic_splitdist">分裂距离</label><span class="field-val" id="vSplitDist">7</span></div>
+                    <input type="range" id="sSplitDist" min="0" max="127" step="1" value="7">
+                  </div>
+                  <div class="field">
+                    <div class="field-head"><label for="sInnerSplit" title="cl_crosshair_dynamic_splitalpha_innermod">内侧分裂透明度</label><span class="field-val" id="vInnerSplit">1</span></div>
+                    <input type="range" id="sInnerSplit" min="0" max="1" step="0.01" value="1">
+                  </div>
+                  <div class="field">
+                    <div class="field-head"><label for="sOuterSplit" title="cl_crosshair_dynamic_splitalpha_outermod">外侧分裂透明度</label><span class="field-val" id="vOuterSplit">0.5</span></div>
+                    <input type="range" id="sOuterSplit" min="0.3" max="1" step="0.01" value="0.5">
+                  </div>
+                  <div class="field">
+                    <div class="field-head"><label for="sSplitRatio" title="cl_crosshair_dynamic_maxdist_splitratio">分裂长度比例</label><span class="field-val" id="vSplitRatio">1</span></div>
+                    <input type="range" id="sSplitRatio" min="0" max="1" step="0.01" value="1">
+                  </div>
+                </div>
+              </details>
+            </div>
+
           </div>
-          <div class="field">
-            <div class="field-head"><label>间距 Gap</label><span class="field-val" id="vGap">3</span></div>
-            <input type="range" id="sGap" min="-5" max="5" step="0.5" value="3">
-          </div>
-          <div class="field">
-            <div class="field-head"><label>长度 Length</label><span class="field-val" id="vLength">5</span></div>
-            <input type="range" id="sLength" min="0.5" max="10" step="0.5" value="5">
-          </div>
-          <div class="field">
-            <div class="field-head"><label>粗细 Thickness</label><span class="field-val" id="vThickness">1</span></div>
-            <input type="range" id="sThickness" min="0.1" max="6" step="0.1" value="1">
-          </div>
-          <div class="field">
-            <div class="field-head"><label>固定间距 Fixed Gap</label><span class="field-val" id="vFixedGap">0</span></div>
-            <input type="range" id="sFixedGap" min="0" max="10" step="0.1" value="0">
-          </div>
+      </div>
+
+      <!-- 分享与导入：参数区之后，页面纵向流的收尾 -->
+      <div class="panel share-panel">
+        <div class="panel-head">
+          <h2 class="panel-title">分享与导入</h2>
         </div>
 
-        <div class="group">
-          <div class="group-title">颜色</div>
-          <div class="rgb-row">
-            <div class="rgb-cell r">
-              <span class="rgb-label">R</span>
-              <input type="range" id="sRed" min="0" max="255" step="1" value="0">
-              <span class="rgb-val" id="vRed">0</span>
+        <div class="share-body">
+          <div class="share-col">
+            <div class="code-row">
+              <input id="shareCodeInput" readonly spellcheck="false" autocomplete="off" placeholder="CS… 新格式 46 位" aria-label="当前准星的分享码">
+              <button class="btn btn-ghost btn-sm" id="btnCopyCode">复制</button>
             </div>
-            <div class="rgb-cell g">
-              <span class="rgb-label">G</span>
-              <input type="range" id="sGreen" min="0" max="255" step="1" value="255">
-              <span class="rgb-val" id="vGreen">255</span>
+            <div class="code-meta">
+              <span class="code-tag" id="codeFormat">等待输入</span>
             </div>
-            <div class="rgb-cell b">
-              <span class="rgb-label">B</span>
-              <input type="range" id="sBlue" min="0" max="255" step="1" value="0">
-              <span class="rgb-val" id="vBlue">0</span>
-            </div>
-          </div>
-          <div class="color-row2">
-            <span class="color-swatch" id="colorChip"></span>
-            <span class="switch-label">使用透明度</span>
-            <label class="switch"><input type="checkbox" id="sUseAlpha" checked><span class="track"></span></label>
-          </div>
-          <div class="field">
-            <div class="field-head"><label>透明度 Alpha</label><span class="field-val" id="vAlpha">200</span></div>
-            <input type="range" id="sAlpha" min="0" max="255" step="1" value="200">
-          </div>
-        </div>
+            <div class="notice-bar inset" id="legacyNoticeShare" hidden></div>
 
-        <div class="group">
-          <div class="group-title">描边 · 高级</div>
-          <div class="switch-row">
-            <span>绘制描边</span>
-            <label class="switch"><input type="checkbox" id="sOutlineEnabled"><span class="track"></span></label>
-          </div>
-          <div class="field">
-            <div class="field-head"><label>描边粗细</label><span class="field-val" id="vOutline">0.5</span></div>
-            <input type="range" id="sOutline" min="0" max="3" step="0.5" value="0.5">
-          </div>
-          <div class="switch-row">
-            <span>中心点</span>
-            <label class="switch"><input type="checkbox" id="sDot"><span class="track"></span></label>
-          </div>
-          <div class="switch-row">
-            <span>T 型准星</span>
-            <label class="switch"><input type="checkbox" id="sT"><span class="track"></span></label>
-          </div>
-          <div class="switch-row">
-            <span>跟随后坐力</span>
-            <label class="switch"><input type="checkbox" id="sRecoil"><span class="track"></span></label>
-          </div>
-          <div class="switch-row">
-            <span>使用武器缩放间距</span>
-            <label class="switch"><input type="checkbox" id="sWeaponGap"><span class="track"></span></label>
-          </div>
-          <details class="collapse">
-            <summary>动态准星<small>跟随移动/开火的分散效果</small></summary>
-            <div class="collapse-body">
-              <div class="field">
-                <div class="field-head"><label>动态分散距离</label><span class="field-val" id="vSplitDist">7</span></div>
-                <input type="range" id="sSplitDist" min="0" max="30" step="1" value="7">
+            <div class="paste-block import-block">
+              <div class="paste-head">
+                <span class="sub-title">导入</span>
+                <span class="paste-len" id="importKind">自动识别</span>
               </div>
-              <div class="field">
-                <div class="field-head"><label>内侧分裂透明度</label><span class="field-val" id="vInnerSplit">1</span></div>
-                <input type="range" id="sInnerSplit" min="0" max="1" step="0.1" value="1">
-              </div>
-              <div class="field">
-                <div class="field-head"><label>外侧分裂透明度</label><span class="field-val" id="vOuterSplit">0.5</span></div>
-                <input type="range" id="sOuterSplit" min="0" max="1" step="0.1" value="0.5">
-              </div>
-              <div class="field">
-                <div class="field-head"><label>分裂比例</label><span class="field-val" id="vSplitRatio">1</span></div>
-                <input type="range" id="sSplitRatio" min="0" max="1" step="0.1" value="1">
+              <textarea id="importInput" spellcheck="false" rows="3" placeholder="粘贴 CS… 新码 / CSGO- 旧码 / 控制台命令 / cfg 文本，自动识别并应用" aria-label="导入：粘贴分享码或控制台命令"></textarea>
+              <div class="import-actions">
+                <button class="btn btn-ghost" id="btnImportCode">导入并应用</button>
+                <div class="status-msg" id="statusImport"></div>
               </div>
             </div>
-          </details>
+          </div>
+
+          <div class="share-col cmd-col">
+            <div class="paste-block cmd-block">
+              <div class="paste-head cmd-head">
+                <span class="sub-title">控制台命令 · 每句一行</span>
+                <span class="paste-head-right">
+                  <span class="paste-len" id="pasteLen"></span>
+                  <button class="btn btn-primary btn-sm" id="btnCopyPaste">⧉ 复制命令</button>
+                </span>
+              </div>
+              <textarea id="cfgOutput" readonly spellcheck="false" aria-label="控制台命令输出（只读）"></textarea>
+              <div class="cmd-list" id="pasteExtra"></div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
+
   </section>
 
   <!-- ============ 视图 2：选手准星 ============ -->
-  <section class="view" id="view-pros" hidden>
+  <section class="view" id="view-pros" role="tabpanel" aria-labelledby="tab-pros" hidden>
+    <div class="pros-head">
+      <div class="pros-head-text">
+        <h2>职业选手准星库</h2>
+      </div>
+      <div class="pros-stats" id="prosStats"></div>
+    </div>
     <div class="pros-layout">
       <aside class="team-side">
         <div class="team-side-head">战队</div>
@@ -193,67 +254,51 @@
       <div class="players-side">
         <div class="players-toolbar">
           <div class="search-box">
-            <span class="search-icon">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             </span>
-            <input type="text" id="proSearch" placeholder="搜索选手…">
+            <input id="proSearch" type="search" placeholder="搜索选手（donk、ZywOo、m0NESY…）· 按 / 聚焦" autocomplete="off">
           </div>
-          <span class="players-count" id="playersCount"></span>
+          <select class="select mini" id="proRole" aria-label="按位置筛选">
+            <option value="">全部位置</option>
+            <option value="AWPer">AWPer</option>
+            <option value="Rifler">Rifler</option>
+            <option value="IGL">IGL</option>
+          </select>
+          <select class="select mini" id="proSort" aria-label="排序方式">
+            <option value="default">默认排序</option>
+            <option value="name">按名字</option>
+            <option value="edpi">按 eDPI</option>
+            <option value="team">按战队</option>
+          </select>
+          <span class="players-count" id="playersCount" role="status" aria-live="polite"></span>
         </div>
+        <div class="team-detail" id="teamDetail" hidden></div>
         <div class="players-grid" id="proGrid"></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 视图 3：分享码互转 ============ -->
-  <section class="view" id="view-convert" hidden>
-    <div class="section-head">
-      <h2>分享码互转</h2>
-      <p>分享码 ↔ 参数 ↔ cfg 命令</p>
-    </div>
-    <div class="convert-grid">
-      <div class="panel convert-card">
-        <h3>分享码 → 参数</h3>
-        <textarea id="codeImport" placeholder="CSGO-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"></textarea>
-        <button class="btn btn-primary" id="btnDecode">解码并应用</button>
-        <div class="status-msg" id="statusDecode"></div>
-      </div>
-      <div class="panel convert-card">
-        <h3>CFG → 参数</h3>
-        <textarea id="cfgImport" placeholder='cl_crosshairgap "1"
-cl_crosshairsize "3"
-cl_crosshaircolor_r "255"...'></textarea>
-        <button class="btn btn-primary" id="btnImportCfg">解析并应用</button>
-        <div class="status-msg" id="statusImport"></div>
-      </div>
-      <div class="panel convert-card">
-        <h3>当前参数 → CFG</h3>
-        <textarea id="cfgOutput" readonly></textarea>
-        <button class="btn btn-ghost" id="btnCopyCfg2">复制 CFG</button>
-        <div class="status-msg" id="statusExport"></div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="footer">
-  <span>SHOWKEY 制作</span>
+  <div class="footer-inner">
+    <span class="footer-brand">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v4M12 16v4M4 12h4M16 12h4"/></svg>
+      SHOWKEY · CS2 准星工坊
+    </span>
+    <span class="footer-note" id="footerNote"></span>
+  </div>
 </footer>
 
-<!-- 回到顶部 -->
-<button class="to-top" id="toTop" title="回到顶部">↑</button>
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
 
-<!-- 移动端悬浮准星小窗 -->
-<div id="miniPreview" class="mini-preview" title="回到预览区">
-  <img id="miniImg" alt="" class="cx-img">
-</div>
-
-<!-- 选手准星弹窗 -->
 <div class="overlay" id="playerModal" hidden>
-  <div class="crosshair-modal">
-    <button class="modal-x" id="modalClose">✕</button>
+  <div class="crosshair-modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <button class="modal-x" id="modalClose" aria-label="关闭">✕</button>
     <div class="modal-head">
       <div class="modal-player">
+        <img id="mPlayerFace" class="m-playerface" alt="" decoding="async" hidden>
         <img id="mTeamLogo" class="m-teamlogo" alt="">
         <div>
           <div class="m-name" id="mName"></div>
@@ -262,29 +307,118 @@ cl_crosshaircolor_r "255"...'></textarea>
       </div>
       <div class="m-current-code" id="mCode"></div>
     </div>
-    <div class="m-current">
-      <div class="m-preview" id="mPreview"></div>
-      <div class="m-side">
-        <div class="m-side-title">当前准星</div>
-        <div class="m-btns">
-          <button class="btn btn-primary" id="mApply">应用到生成器</button>
-          <button class="btn btn-ghost" id="mCopy">复制分享码</button>
+    <div class="modal-tabs" id="modalTabs" role="tablist" aria-label="详情分类">
+      <button class="active" id="mtabBtn-xhair" data-mtab="xhair" role="tab" aria-selected="true" aria-controls="mtab-xhair" tabindex="0">准星</button>
+      <button id="mtabBtn-info" data-mtab="info" role="tab" aria-selected="false" aria-controls="mtab-info" tabindex="-1">选手信息</button>
+    </div>
+
+    <div class="mtab" id="mtab-xhair" role="tabpanel" aria-labelledby="mtabBtn-xhair">
+      <div class="m-current">
+        <div class="m-preview" id="mPreview">
+          <canvas id="mPreviewCanvas" width="156" height="156"></canvas>
+          <button class="m-dyn-play" id="mDynPlay" hidden aria-label="播放开火动画">▶</button>
         </div>
-        <div class="m-params" id="mParams"></div>
+        <div class="m-side">
+          <div class="m-side-title">当前准星 <span class="m-kind" id="mKind"></span></div>
+          <div class="m-btns">
+            <button class="btn btn-primary" id="mApply">应用到生成器</button>
+            <button class="btn btn-ghost" id="mCopyCode">复制分享码</button>
+          </div>
+          <div id="mActions"></div>
+          <div class="m-params" id="mParams"></div>
+        </div>
+      </div>
+      <div class="m-history">
+        <div class="m-history-title">历史版本 <small>按官方比赛检测记录收集 · 含当前最新一版 · 同样按新旧准星规则处理</small></div>
+        <div class="m-history-list" id="mHistoryList"></div>
       </div>
     </div>
-    <div class="m-history">
-      <div class="m-history-title">历史版本</div>
-      <div class="m-history-list" id="mHistoryList"></div>
+
+    <div class="mtab" id="mtab-info" role="tabpanel" aria-labelledby="mtabBtn-info" hidden>
+      <div class="m-data" id="mData"></div>
+      <div class="m-foot"><a class="m-source" id="mSource" target="_blank" rel="noopener">数据来源 ↗</a></div>
     </div>
   </div>
 </div>
 
-<div id="toast"></div>
-<div id="badge" style="position:fixed;left:10px;bottom:8px;z-index:300;font-size:11px;color:#666;background:rgba(0,0,0,0.6);padding:2px 8px;border-radius:5px;font-family:monospace"></div>
+<div class="overlay" id="convertModal" hidden>
+  <div class="convert-dialog" role="dialog" aria-modal="true" aria-labelledby="cvTitle">
+    <button class="modal-x" id="cvClose" aria-label="关闭">✕</button>
+    <div class="cv-head">
+      <span class="cv-tag">旧码转换</span>
+      <h3 id="cvTitle">复制转换码</h3>
+    </div>
+    <p class="cv-lead">游戏已拒绝导入旧格式码。下面是转换后的新码，它与原始码存在差异，不代表选手当前设置。</p>
+    <div class="cv-meta" id="cvMeta"></div>
+    <ul class="cv-diff" id="cvDiff"></ul>
+    <div class="cv-code" id="cvCode"></div>
+    <details class="cv-orig">
+      <summary>查看原始码（游戏已不支持）</summary>
+      <div class="cv-orig-row"><code id="cvOrig"></code></div>
+    </details>
+    <div class="cv-actions">
+      <button class="btn btn-ghost" id="cvCancel">取消</button>
+      <button class="btn btn-primary" id="cvConfirm">我了解，复制转换码</button>
+    </div>
+  </div>
+</div>
 
-<script src="js/codec.js?v=19"></script>
-<script src="js/players.js?v=19"></script>
-<script src="js/app.js?v=19"></script>
+<div class="overlay cp-overlay" id="cpDialog" hidden>
+  <div class="cp-dialog" role="dialog" aria-modal="true" aria-labelledby="cpTitle">
+    <div class="cp-head">
+      <h3 class="cp-title" id="cpTitle">颜色和透明度</h3>
+      <span class="cp-hint">拖动方块与条状滑块，或直接填数值</span>
+    </div>
+    <div class="cp-body">
+      <div class="cp-stack">
+        <div class="cp-sv" id="cpSV" role="slider" tabindex="0"
+             aria-label="饱和度与明度：左右调饱和度，上下调明度"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="饱和度 100% · 明度 100%">
+          <i class="cp-marker" id="cpSVMarker" aria-hidden="true"></i>
+        </div>
+        <div class="cp-slider cp-hue" id="cpHue" role="slider" tabindex="0" aria-label="色相"
+             aria-valuemin="0" aria-valuemax="359" aria-valuenow="120" aria-valuetext="色相 120 度">
+          <i class="cp-bar" id="cpHueMarker" aria-hidden="true"></i>
+        </div>
+        <div class="cp-slider cp-alpha" id="cpAlpha" role="slider" tabindex="0" aria-label="不透明度"
+             aria-valuemin="0" aria-valuemax="255" aria-valuenow="255" aria-valuetext="不透明度 255">
+          <i class="cp-bar" id="cpAlphaMarker" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="cp-pane">
+        <span class="cp-pane-label">新</span>
+        <span class="cp-preview" id="cpNew" aria-hidden="true"></span>
+        <span class="cp-pane-label">当前</span>
+        <span class="cp-preview" id="cpCur" aria-hidden="true"></span>
+        <div class="cp-fields">
+          <label class="cp-field"><span>R</span><input type="number" id="nRed" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 R"></label>
+          <label class="cp-field"><span>G</span><input type="number" id="nGreen" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色 G"></label>
+          <label class="cp-field"><span>B</span><input type="number" id="nBlue" min="0" max="255" step="1" value="0" inputmode="numeric" aria-label="准星颜色 B"></label>
+          <label class="cp-field cp-field-wide"><span>#</span><input type="text" id="cpHexInput" value="#00FF00" maxlength="7" spellcheck="false" autocomplete="off" aria-label="准星颜色十六进制"></label>
+          <label class="cp-field"><span>A</span><input type="number" id="nAlpha" min="0" max="255" step="1" value="255" inputmode="numeric" aria-label="准星颜色不透明度"></label>
+        </div>
+      </div>
+    </div>
+    <div class="cp-foot">
+      <button class="btn btn-ghost btn-sm" id="cpCancel" type="button">取消</button>
+      <button class="btn btn-primary btn-sm" id="cpAccept" type="button">接受</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script src="js/core-alphabet.js?v=3680011"></script>
+<script src="js/core-layouts.js?v=3680011"></script>
+<script src="js/core-codec.js?v=3680011"></script>
+<script src="js/core-legacy.js?v=3680011"></script>
+<script src="js/core-convert.js?v=3680011"></script>
+<script src="js/core-convars.js?v=3680011"></script>
+<script src="js/render-model.js?v=3680011"></script>
+<script src="js/render-canvas.js?v=3680011"></script>
+<script src="js/codec.js?v=3680011"></script>
+<script src="js/players.js?v=3680011"></script>
+<script src="js/hltv-teams.js?v=3680011"></script>
+<script src="js/app.js?v=3680011"></script>
 </body>
 </html>
