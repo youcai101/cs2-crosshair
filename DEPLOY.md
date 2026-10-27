@@ -26,6 +26,21 @@ git push
 
 > 提示：改了 `css/style.css`、`js/*.js`、`index.html` 之后记得把 `index.html` 里的 `?v=` 版本号改掉（`node tools/auto-update.js` 会自动 bump；纯手工改前端时手动改一下），否则浏览器可能继续用缓存。
 
+### 如果 `git push` 卡住 / 被重置
+
+部分地区直连 GitHub 的 HTTPS 会在上传阶段被 RST（现象：`RPC failed; curl 55 Send failure: Connection was reset`），
+而 `git ls-remote` / `git fetch` 仍然正常。这时可以先用 GitHub 的 **Git Data API** 把文件直接写进 `main`：
+
+```text
+POST /repos/youcai101/cs2-crosshair/git/blobs     # 每个改动文件一个 blob（base64）
+POST /repos/youcai101/cs2-crosshair/git/trees     # 用「未改动的 blob sha + 新上传的 sha」拼出整棵树
+POST /repos/youcai101/cs2-crosshair/git/commits   # parents = 当前 main
+PATCH /repos/youcai101/cs2-crosshair/git/refs/heads/main
+```
+
+要点：只上传内容变了的文件（blob sha 相同可复用），并发别超过 3、每个请求之间停 100–150ms，否则会撞 GitHub 的二级限流（403）。
+令牌用 `git credential fill`（输入 `protocol=https` / `host=github.com`）就能从 Windows 凭据管理器里取出来，不用手动粘贴。
+
 ## 每日自动更新数据
 
 工作流：`.github/workflows/daily-update.yml`
