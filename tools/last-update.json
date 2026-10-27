@@ -4,43 +4,8 @@
   "teams": 30,
   "withHistory": 149,
   "addedTeams": [],
-  "addedPlayers": [
-    "Neityu",
-    "ryu",
-    "Moseyuh",
-    "Grim",
-    "Jeorge",
-    "Kaze"
-  ],
-  "removedPlayers": [
-    "chopper",
-    "jL",
-    "Xyp9x",
-    "ANGE1",
-    "bit",
-    "MAJ3R",
-    "broky",
-    "olofmeister",
-    "HooXi",
-    "jabbi",
-    "slaxejezzz",
-    "dav1deuS",
-    "vsm",
-    "lauNX",
-    "tiziaN",
-    "ShahZaM",
-    "DANK1NG",
-    "SLOWLY",
-    "Snax",
-    "n0te",
-    "dephh",
-    "AZR",
-    "Ethan",
-    "s0m",
-    "oSee",
-    "Marek",
-    "Trash"
-  ],
+  "addedPlayers": [],
+  "removedPlayers": [],
   "changedCrosshairs": [],
   "migrated": 0,
   "newFormat": 149,
@@ -49,6 +14,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-10-26T16:02:45.664Z",
-  "durationMs": 320057
+  "updatedAt": "2026-10-27T11:12:24.166Z",
+  "durationMs": 157013
 }
