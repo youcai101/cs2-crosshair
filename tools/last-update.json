@@ -8,29 +8,24 @@
   "removedPlayers": [],
   "changedCrosshairs": [
     {
-      "name": "YEKINDAR",
-      "from": "CSat9s9tAqPpimsULjDMQ2D7oKyARZsOfDm3kWdcQxTfSa",
-      "to": "CSHwwEuPeaioROD9qTvmN7HT3umotat8EACz2BvTXsPUJe"
+      "name": "nettik",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
+      "to": "CSwqJn2T9WrDMXH2H874tXpbtUdO3AUAYBPuNWOELdcFWN"
     },
     {
-      "name": "kscerato",
-      "from": "CSM9yeif5somwBWXz5xPknj5SjSSH6vKEODqo6d4eWmv9A",
-      "to": "CSXVQtCujeaNWjvQatoVBuqiWcRLPqAUAJ4AFee9yd25dO"
+      "name": "nitr0",
+      "from": "CSYM4bCyMXenT5DptUw9ZsLVWpNkQ7xvJhxrdZXdmbUD4W",
+      "to": "CSGNEeqn4GjWExbuYBxJPx5DsYYqONGV7S3jWGvCB6zeGG"
     },
     {
-      "name": "xertioN",
-      "from": "CSaBV9zYubjoK5cCkzou2FLcNr8UtzTtk8BO4GfvucxhrA",
-      "to": "CSKC7tG2ziH25GNDYLbpAbQD94pBD3tfWuXWLFnUcCrWif"
+      "name": "Grim",
+      "from": "CSJSH4Lf5VxmdBx3MfFF3OTB53r3zHEYmUnHE6CoZbTk8k",
+      "to": "CSVzcrzGM3Tu6EOmDUinMpr62JVtxZXzrrVVWyoT68GJJA"
     },
     {
-      "name": "saffee",
-      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
-      "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
-    },
-    {
-      "name": "snow",
-      "from": "CSFCXm5nGZj5yFdHbLKFXnWDfc9pPYrW5N6zDrAtzXXaQD",
-      "to": "CSd6ESAamKsLWXMn5HzqKdAyNRGczhWyezkrY4BbaCVbRe"
+      "name": "Jeorge",
+      "from": "CS4rEsEKpK6htFq5jawPiyECPm7fu9qBSAtFwdiU4PXFac",
+      "to": "CSAZ3Km2xPnhDaaZ4FWWxBpSJoFood9YTBCYfN3Jodzbjb"
     }
   ],
   "migrated": 0,
@@ -40,6 +35,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-10-31T22:37:48.165Z",
-  "durationMs": 164039
+  "updatedAt": "2026-11-01T22:57:12.541Z",
+  "durationMs": 166634
 }
