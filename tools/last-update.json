@@ -8,134 +8,94 @@
   "removedPlayers": [],
   "changedCrosshairs": [
     {
-      "name": "karrigan",
-      "from": "CSErFb9xph6deZD8sYBimNJktYoK2isifmqEtumE8WnO6O",
-      "to": "CS2SbthS8fo6DcosFMNnxt8BSuiOY9EcU4pz9CTQNJL2vP"
+      "name": "NiKo",
+      "from": "CSDjxWXdRuX3irw7QyVRG4zvatyRQEKJbSvWZ7H2sajzhi",
+      "to": "CSWqpmVE84W9JMwxhCoyF5rV78XSQEKJbSvWZ7H2sajzhi"
     },
     {
-      "name": "NiKo",
-      "from": "CSjdGh48mioXws2RtuOp8vNCzaqDoGebKPm2Ej2jmpATyF",
-      "to": "CSDjxWXdRuX3irw7QyVRG4zvatyRQEKJbSvWZ7H2sajzhi"
+      "name": "TeSeS",
+      "from": "CSn7Vvb9oqvwrCvUrkCwcTcUC3TJiVnM9B36N3EiGUEbbX",
+      "to": "CSCGKsJy8pO3kWLUYrerppFQNFxmtk5bxq93ZZ25x79hkX"
     },
     {
       "name": "m0NESY",
-      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
+      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
+      "to": "CSTjicTWjkYkq965ihXB93bXUvSvjir5DhaCXW2NcwOAYF"
     },
     {
       "name": "kyousuke",
-      "from": "CSCbVYPm8VFPzijMwx79HhpWPxt4bYa7NUhwWKXDPE227H",
-      "to": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF"
+      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
+      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
     },
     {
       "name": "YEKINDAR",
-      "from": "CSEWtj6dTcSXa35qSuH7daLmqC7DBSx8xTU8HGoKfdhKUU",
-      "to": "CSWfnmV5Q5jrRfhVMfDq6WwHANtoGdxDVOL8svDCOMwPSb"
-    },
-    {
-      "name": "kscerato",
-      "from": "CSFSeRKbPTW9uokYFQjqyiTGZLZWWqUxLALJc8dHV5bq8E",
-      "to": "CSsAh6P2V7zYJPRMUpHW9KvrkbRBJzYP8aWezwoNyPVGmV"
+      "from": "CSWfnmV5Q5jrRfhVMfDq6WwHANtoGdxDVOL8svDCOMwPSb",
+      "to": "CSOtBQkZfviznvSfXwTD3EDprrSQipr7EdFcAkVOQzcBsd"
     },
     {
       "name": "iM",
-      "from": "CSx6quXcU8bN8ZVLM6G9SEmHz9yodQko8uvW6uwuNE227H",
-      "to": "CSz2Hx3dviEyKFu3hJxVCpV7jUSEe5FuraQmzdNuZLrsXG"
+      "from": "CSz2Hx3dviEyKFu3hJxVCpV7jUSEe5FuraQmzdNuZLrsXG",
+      "to": "CSrTmmdk2kqhXQbH3hZQsbR5qssf2KVNhEnkVGj7byXdxJ"
     },
     {
       "name": "makazze",
-      "from": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF",
-      "to": "CS7bu86ej2wLe8pXWQbs6RKmdyjvjir5DhaCXW2NcwOAYF"
-    },
-    {
-      "name": "dgt",
-      "from": "CScxKCc7FULZEvxDw87BJLNTK8swGae8rK6UBJK4J36xVO",
-      "to": "CS8JZeN59V7PbLpLXVUs2GV4ZkXTNRfxdGF6dXsfxtqpzA"
-    },
-    {
-      "name": "meyern",
-      "from": "CSCNx67BqpBPFCxHawHL6uuWnA4mrb9DjsauA6c6zTVK9i",
-      "to": "CSeJNHiKjPFRxJ3Y6XrFquR3c3Hxv44MuvawdwWWGDtRZf"
-    },
-    {
-      "name": "luchov",
-      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
-    },
-    {
-      "name": "Jimpphat",
-      "from": "CSmkFBqC8BwfnX8ZEYHeEoRGjYVxNEJXYNNJ8QSdDhXwGF",
-      "to": "CSSkST2PkEj9LzvPZKb5Utkjr2CbwFUGqDfMoRxZ3GYMeN"
-    },
-    {
-      "name": "kyxsan",
-      "from": "CSSp4KQvcW2YpajTr78eNJw6QLP7mfNSt3quUW9JrsiFTY",
-      "to": "CSa75PfiyHzfL6WJFuPCZeTJtcsxujmSEtXRkJd9BuUuja"
-    },
-    {
-      "name": "Wicadia",
-      "from": "CSOrscXLqUUwGpNt8p2NpxC2CoNqWXcRQwB8vhESkpATyF",
-      "to": "CS6OpxPO4UFU8MZmxhUAEktdn7DveuEhiX3uru22HzvT7K"
-    },
-    {
-      "name": "jcobbb",
-      "from": "CSFSeRKbPTW9uokYFQjqyiTGZLZWWqUxLALJc8dHV5bq8E",
-      "to": "CSB5pEFO4q5FdvMsAMWeLp5sUZxwcB9iAKJRQqS9xnd4Jc"
-    },
-    {
-      "name": "JBOEN",
-      "from": "CSzon2BcMhYe8jsbe2TeXnaaooLNF66z44FYOJ76nNeShk",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
-    },
-    {
-      "name": "huNter",
-      "from": "CSYPUzEY9NfQCumQvBOz38GsFDzoJuOzkMT9mEUnJ4XsbW",
-      "to": "CSTum3CfNRAuPAYuTjGJZzJE8v7OtRxRo3z8ZrFdYAe4TV"
-    },
-    {
-      "name": "matys",
-      "from": "CSaVTJJved4ktm5LnUpRnzE5xnsUoSLAcOBsa8bkQ4qBsd",
-      "to": "CSNf4HwJkHMPYvN9KvLu4Tz36oxVto5n4GD8RZqOiQv5id"
-    },
-    {
-      "name": "s1ren",
-      "from": "CSsqRC5Q7RcOd2hVqDqHU72t3LeZwOGV6NpBfw2C7xRmTW",
-      "to": "CSDVpex5Gi3hbCmwhAp9PerDKdStWnA8Of6HWRuZpSjtxH"
-    },
-    {
-      "name": "bLitz",
-      "from": "CSvwtOXWXvXAorfjYbzkaBQ7yJeyFa66vSrzCpDNwBkdDS",
-      "to": "CSQO9YqKbhHyvpOO6MHh42dZnmnUWC8zC2zCGpDNwBkdDS"
-    },
-    {
-      "name": "Jame",
-      "from": "CSLfGMnEFGA6xaJrOpDkmermQTJfddWKPTGGmO4SyxAppH",
-      "to": "CSYdsUxqCszEZJpAOv2yWRFAphxJ8fHpAnr29kX2uUGWTX"
-    },
-    {
-      "name": "xiELO",
-      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
-      "to": "CShRYYYypbbvHT2QLbS6dv9V9CEyunvMMM5LMDd7byXdxJ"
-    },
-    {
-      "name": "zweih",
-      "from": "CSepLVoksm3C6LSyXD889ffQ6rawDimQ7fqJkkaAaJhO9C",
-      "to": "CSDxmRM2T5RYmhcN3YFYJRrAxbNKoDANCQKo259ZssiFTY"
-    },
-    {
-      "name": "try",
-      "from": "CSk5AoPjLuHWpCZRauof6WN2bMbpbxr6MkCroWNEBGo9KY",
-      "to": "CSOrscXLqUUwGpNt8p2NpxC2CoNqWXcRQwB8vhESkpATyF"
-    },
-    {
-      "name": "esenthial",
-      "from": "CSbUNCaawQcfY6BakNBM4Qas57qRZ2tLeXkzXkQTLbTk7J",
+      "from": "CS7bu86ej2wLe8pXWQbs6RKmdyjvjir5DhaCXW2NcwOAYF",
       "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
     },
     {
-      "name": "Moseyuh",
-      "from": "CSM9yeif5somwBWXz5xPknj5SjSSH6vKEODqo6d4eWmv9A",
-      "to": "CS8JZeN59V7PbLpLXVUs2GV4ZkXTNRfxdGF6dXsfxtqpzA"
+      "name": "Jimpphat",
+      "from": "CSSkST2PkEj9LzvPZKb5Utkjr2CbwFUGqDfMoRxZ3GYMeN",
+      "to": "CSoO8rcTtkQtcXi4WC7hfEceNb8nfoiuZk7W9BXpeYvQYE"
+    },
+    {
+      "name": "s1ren",
+      "from": "CSDVpex5Gi3hbCmwhAp9PerDKdStWnA8Of6HWRuZpSjtxH",
+      "to": "CSrafXQVEiTpxm69dm6GRhSJn99XZXUJZnksUUSCJEvaYj"
+    },
+    {
+      "name": "d1Ledez",
+      "from": "CSb6hSBoH9jxa9s5pZREQvTSOfwbALxSuOL6f38ytS724T",
+      "to": "CSaqwoWsPPaPvtGid9fDNWuq8TRanTCGPoGnVZYy6hZr9f"
+    },
+    {
+      "name": "bLitz",
+      "from": "CSQO9YqKbhHyvpOO6MHh42dZnmnUWC8zC2zCGpDNwBkdDS",
+      "to": "CSpr7GQd8VWPxdipVHxxVHzqYstnPJY3qRhTbfpKnb85wL"
+    },
+    {
+      "name": "cobrazera",
+      "from": "CSQkvKnw8Ex3ZPRtucNfUrSemkyKbiZpeRfQxa9dYVdMbY",
+      "to": "CSHnLuP5ZOZARFuo4OHTt7YjHFEJyDANLmuKOhhOykUYtY"
+    },
+    {
+      "name": "HObbit",
+      "from": "CSDxmRM2T5RYmhcN3YFYJRrAxbNKoDANCQKo259ZssiFTY",
+      "to": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF"
+    },
+    {
+      "name": "Jame",
+      "from": "CSYdsUxqCszEZJpAOv2yWRFAphxJ8fHpAnr29kX2uUGWTX",
+      "to": "CSJJEJYj6NY9f4oOiBDLbevDLLV6sKCK2ZVVsmsQnfoCsd"
+    },
+    {
+      "name": "zweih",
+      "from": "CSDxmRM2T5RYmhcN3YFYJRrAxbNKoDANCQKo259ZssiFTY",
+      "to": "CS7JdFJhw8GxXqM5aLFzxEUiszEPLEuBDKur7SwOJxmyfG"
+    },
+    {
+      "name": "EliGE",
+      "from": "CS7bo96aE2LQWXMnoEhrNbo7fmxFLtt4xXBjNvvODtnKRf",
+      "to": "CSUoVqFhi59rOLcWPEBUNQy2X7CKcB5jGyXJswh6FTB72a"
+    },
+    {
+      "name": "Jorko",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
+      "to": "CSavmqNeBJhkXQUjpDCcNQaMB9QPYvYifycAUNpBAEdduU"
+    },
+    {
+      "name": "susp",
+      "from": "CSB47c3bcXdcjYAeZYSq766ztxpVusBLVcHYf89KEYCfAd",
+      "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
     }
   ],
   "migrated": 0,
@@ -145,6 +105,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-04T00:05:16.579Z",
-  "durationMs": 208863
+  "updatedAt": "2026-11-05T00:28:41.107Z",
+  "durationMs": 174154
 }
