@@ -6,7 +6,63 @@
   "addedTeams": [],
   "addedPlayers": [],
   "removedPlayers": [],
-  "changedCrosshairs": [],
+  "changedCrosshairs": [
+    {
+      "name": "YEKINDAR",
+      "from": "CSOtBQkZfviznvSfXwTD3EDprrSQipr7EdFcAkVOQzcBsd",
+      "to": "CSduionjhKY4Fc2NMLR7nTzqKtYbLX3nZMCb3h3iXqFzsa"
+    },
+    {
+      "name": "kscerato",
+      "from": "CSsAh6P2V7zYJPRMUpHW9KvrkbRBJzYP8aWezwoNyPVGmV",
+      "to": "CS9oCztzYGfZYGXxLsavGBzJ6Okzj8cOE2JnGaRWJvbUHD"
+    },
+    {
+      "name": "iM",
+      "from": "CSrTmmdk2kqhXQbH3hZQsbR5qssf2KVNhEnkVGj7byXdxJ",
+      "to": "CSx6quXcU8bN8ZVLM6G9SEmHz9yodQko8uvW6uwuNE227H"
+    },
+    {
+      "name": "makazze",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
+      "to": "CSU6xarNbozBafqdevowLx6qtiGORd6o2A7PZbeiLZKGhF"
+    },
+    {
+      "name": "zorte",
+      "from": "CS9N83UjXRAjNRMtFLmQGpAR8qcuhCfByNtBOKTHrWjwLV",
+      "to": "CSjEL7otEShdT7vtXEJV5SXVwcARWwOu9hmEBmfu9toqCV"
+    },
+    {
+      "name": "s1ren",
+      "from": "CSrafXQVEiTpxm69dm6GRhSJn99XZXUJZnksUUSCJEvaYj",
+      "to": "CSpnJA6O5rnusaTGKFVkOhsKRNtK9MdDmGYGi5LJFiZ7FJ"
+    },
+    {
+      "name": "HObbit",
+      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
+      "to": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF"
+    },
+    {
+      "name": "FL1T",
+      "from": "CS8MpBe3QDWqM3qri5bVTEEibSm5p5aTNWM3bUC5bOHtnP",
+      "to": "CSZ56vOh8aQhOYEmULHCSVfuEwf2Q6m2m8FB2wUsNcjGwO"
+    },
+    {
+      "name": "Jame",
+      "from": "CSJJEJYj6NY9f4oOiBDLbevDLLV6sKCK2ZVVsmsQnfoCsd",
+      "to": "CSfAeEybyvZHSw9d93F6v6NDtfqPWabYmqaoDBEkLk7ikX"
+    },
+    {
+      "name": "xiELO",
+      "from": "CShRYYYypbbvHT2QLbS6dv9V9CEyunvMMM5LMDd7byXdxJ",
+      "to": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF"
+    },
+    {
+      "name": "zweih",
+      "from": "CS7JdFJhw8GxXqM5aLFzxEUiszEPLEuBDKur7SwOJxmyfG",
+      "to": "CS28nMFPARkutpD2cLnT9rVnrYUmYiuVwFCY5cRQOAh3HB"
+    }
+  ],
   "migrated": 0,
   "newFormat": 149,
   "legacyFormat": 0,
@@ -14,6 +70,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-06T00:28:15.507Z",
-  "durationMs": 208137
+  "updatedAt": "2026-11-06T23:47:50.936Z",
+  "durationMs": 176160
 }
