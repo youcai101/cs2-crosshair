@@ -6,98 +6,7 @@
   "addedTeams": [],
   "addedPlayers": [],
   "removedPlayers": [],
-  "changedCrosshairs": [
-    {
-      "name": "NiKo",
-      "from": "CSDjxWXdRuX3irw7QyVRG4zvatyRQEKJbSvWZ7H2sajzhi",
-      "to": "CSWqpmVE84W9JMwxhCoyF5rV78XSQEKJbSvWZ7H2sajzhi"
-    },
-    {
-      "name": "TeSeS",
-      "from": "CSn7Vvb9oqvwrCvUrkCwcTcUC3TJiVnM9B36N3EiGUEbbX",
-      "to": "CSCGKsJy8pO3kWLUYrerppFQNFxmtk5bxq93ZZ25x79hkX"
-    },
-    {
-      "name": "m0NESY",
-      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
-      "to": "CSTjicTWjkYkq965ihXB93bXUvSvjir5DhaCXW2NcwOAYF"
-    },
-    {
-      "name": "kyousuke",
-      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
-    },
-    {
-      "name": "YEKINDAR",
-      "from": "CSWfnmV5Q5jrRfhVMfDq6WwHANtoGdxDVOL8svDCOMwPSb",
-      "to": "CSOtBQkZfviznvSfXwTD3EDprrSQipr7EdFcAkVOQzcBsd"
-    },
-    {
-      "name": "iM",
-      "from": "CSz2Hx3dviEyKFu3hJxVCpV7jUSEe5FuraQmzdNuZLrsXG",
-      "to": "CSrTmmdk2kqhXQbH3hZQsbR5qssf2KVNhEnkVGj7byXdxJ"
-    },
-    {
-      "name": "makazze",
-      "from": "CS7bu86ej2wLe8pXWQbs6RKmdyjvjir5DhaCXW2NcwOAYF",
-      "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
-    },
-    {
-      "name": "Jimpphat",
-      "from": "CSSkST2PkEj9LzvPZKb5Utkjr2CbwFUGqDfMoRxZ3GYMeN",
-      "to": "CSoO8rcTtkQtcXi4WC7hfEceNb8nfoiuZk7W9BXpeYvQYE"
-    },
-    {
-      "name": "s1ren",
-      "from": "CSDVpex5Gi3hbCmwhAp9PerDKdStWnA8Of6HWRuZpSjtxH",
-      "to": "CSrafXQVEiTpxm69dm6GRhSJn99XZXUJZnksUUSCJEvaYj"
-    },
-    {
-      "name": "d1Ledez",
-      "from": "CSb6hSBoH9jxa9s5pZREQvTSOfwbALxSuOL6f38ytS724T",
-      "to": "CSaqwoWsPPaPvtGid9fDNWuq8TRanTCGPoGnVZYy6hZr9f"
-    },
-    {
-      "name": "bLitz",
-      "from": "CSQO9YqKbhHyvpOO6MHh42dZnmnUWC8zC2zCGpDNwBkdDS",
-      "to": "CSpr7GQd8VWPxdipVHxxVHzqYstnPJY3qRhTbfpKnb85wL"
-    },
-    {
-      "name": "cobrazera",
-      "from": "CSQkvKnw8Ex3ZPRtucNfUrSemkyKbiZpeRfQxa9dYVdMbY",
-      "to": "CSHnLuP5ZOZARFuo4OHTt7YjHFEJyDANLmuKOhhOykUYtY"
-    },
-    {
-      "name": "HObbit",
-      "from": "CSDxmRM2T5RYmhcN3YFYJRrAxbNKoDANCQKo259ZssiFTY",
-      "to": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF"
-    },
-    {
-      "name": "Jame",
-      "from": "CSYdsUxqCszEZJpAOv2yWRFAphxJ8fHpAnr29kX2uUGWTX",
-      "to": "CSJJEJYj6NY9f4oOiBDLbevDLLV6sKCK2ZVVsmsQnfoCsd"
-    },
-    {
-      "name": "zweih",
-      "from": "CSDxmRM2T5RYmhcN3YFYJRrAxbNKoDANCQKo259ZssiFTY",
-      "to": "CS7JdFJhw8GxXqM5aLFzxEUiszEPLEuBDKur7SwOJxmyfG"
-    },
-    {
-      "name": "EliGE",
-      "from": "CS7bo96aE2LQWXMnoEhrNbo7fmxFLtt4xXBjNvvODtnKRf",
-      "to": "CSUoVqFhi59rOLcWPEBUNQy2X7CKcB5jGyXJswh6FTB72a"
-    },
-    {
-      "name": "Jorko",
-      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
-      "to": "CSavmqNeBJhkXQUjpDCcNQaMB9QPYvYifycAUNpBAEdduU"
-    },
-    {
-      "name": "susp",
-      "from": "CSB47c3bcXdcjYAeZYSq766ztxpVusBLVcHYf89KEYCfAd",
-      "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
-    }
-  ],
+  "changedCrosshairs": [],
   "migrated": 0,
   "newFormat": 149,
   "legacyFormat": 0,
@@ -105,6 +14,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-05T00:28:41.107Z",
-  "durationMs": 174154
+  "updatedAt": "2026-11-06T00:28:15.507Z",
+  "durationMs": 208137
 }
