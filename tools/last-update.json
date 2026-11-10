@@ -8,24 +8,9 @@
   "removedPlayers": [],
   "changedCrosshairs": [
     {
-      "name": "iM",
-      "from": "CSMELFZRsu8dPXfebZEMXJhpKJGfpVGqcpj6TL6hXfA88D",
-      "to": "CSEQvcDJf3yq59EoObCmL9MYjR5xBUUmqFQdw4dpFMFifH"
-    },
-    {
-      "name": "makazze",
-      "from": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF",
-      "to": "CSLvncEXwSxjR7DGJWthLJUfVKyy3z2kV8xk3Xn5eWmv9A"
-    },
-    {
-      "name": "s1ren",
-      "from": "CSpnJA6O5rnusaTGKFVkOhsKRNtK9MdDmGYGi5LJFiZ7FJ",
-      "to": "CShmMTPaXXdWoe8HBSP73RGf2VNoKbvTaveDvb8dwLVDPJ"
-    },
-    {
-      "name": "d1Ledez",
-      "from": "CSaqwoWsPPaPvtGid9fDNWuq8TRanTCGPoGnVZYy6hZr9f",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
+      "name": "max",
+      "from": "CSNSsGcvoviQbhAyccq5QyTupjAOyck6e4u3MsktnRhjyE",
+      "to": "CSGOE5ACDmh68hiVG5obKzQBrYsXZKN9paTSbJaAynd4Jc"
     }
   ],
   "migrated": 0,
@@ -35,6 +20,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-08T23:00:53.751Z",
-  "durationMs": 193168
+  "updatedAt": "2026-11-10T02:19:21.703Z",
+  "durationMs": 175607
 }
