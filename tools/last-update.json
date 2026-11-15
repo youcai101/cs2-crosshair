@@ -8,39 +8,74 @@
   "removedPlayers": [],
   "changedCrosshairs": [
     {
-      "name": "NiKo",
-      "from": "CSvTbp5FWLhB7aSh5xhKD68fk6wtrwXURGZOBaFG4GCEZB",
-      "to": "CSdYX5OLjVJaDjkDoThW29XHWX6Br7UwXKadAYmwi37QSb"
-    },
-    {
-      "name": "kyousuke",
-      "from": "CSdYX5OLjVJaDjkDoThW29XHWX6Br7UwXKadAYmwi37QSb",
-      "to": "CS2FiEE2R8adYwabVpOWsYLQUnGORd6o2A7PZbeiLZKGhF"
-    },
-    {
       "name": "magixx",
-      "from": "CSTcPpGs7aDcTZn6HeSfwpdCUN4cB5QnJUE32hwVEqWqCV",
-      "to": "CS7OUHLFkK5XZqANxWHXh4tKymopbbFjjPwO2veyqEOPLX"
-    },
-    {
-      "name": "donk",
-      "from": "CSGNEeqn4GjWExbuYBxJPx5DsYYqONGV7S3jWGvCB6zeGG",
-      "to": "CSdpH9aUv4mNAWc2hfAOdTrJ8J6H6HUFuvWxYMZXshvmPG"
+      "from": "CS7OUHLFkK5XZqANxWHXh4tKymopbbFjjPwO2veyqEOPLX",
+      "to": "CSrPSxt5uXMdtRu5jqcpCUaPxL5JTdt55cBZVxRftokBvS"
     },
     {
       "name": "YEKINDAR",
-      "from": "CSwz2idaYtssLCHHzPDcNKvBdUXWjGYjVm4DyrfWVCYETY",
-      "to": "CSkwLNbarFnV4awzpf5jvZbczXuc7LbNTVGykeAQoWTcuU"
+      "from": "CSkwLNbarFnV4awzpf5jvZbczXuc7LbNTVGykeAQoWTcuU",
+      "to": "CSWqTS82CKFA5O75birJv2AKMErQJpp9PTDyDJt6FTB72a"
     },
     {
       "name": "kscerato",
-      "from": "CSLC2GGwsjZOZFWe6UGbx6PDQpACsuk2bpErqvvF7eQNjc",
-      "to": "CSzOpAncxhR7LGNnyKpJZSQvw4qOqbPhbTfttbZ73CFNqF"
+      "from": "CSzOpAncxhR7LGNnyKpJZSQvw4qOqbPhbTfttbZ73CFNqF",
+      "to": "CSdpH9aUv4mNAWc2hfAOdTrJ8J6H6HUFuvWxYMZXshvmPG"
     },
     {
-      "name": "molodoy",
-      "from": "CSkEEut83SiR87Ksr2LuvHVPcTtCfWtjtMOfdXsfxtqpzA",
-      "to": "CSNSkVknOKVLdFOFQ7dME4V94Z5pa66jnOQj4HOWJvbUHD"
+      "name": "frozen",
+      "from": "CSXhYcRknnJRNRipQDscrX69AjRiaTuveQmT6XFOvWmvAc",
+      "to": "CSM9yeif5somwBWXz5xPknj5SjSSH6vKEODqo6d4eWmv9A"
+    },
+    {
+      "name": "jcobbb",
+      "from": "CSB5pEFO4q5FdvMsAMWeLp5sUZxwcB9iAKJRQqS9xnd4Jc",
+      "to": "CS7YGNU6jsStqoc6xkYnkbrS8sES8aZ8L8bpnDL9sf7U8m"
+    },
+    {
+      "name": "JBOEN",
+      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
+      "to": "CSj8rxDydSJxjXXawV2F3SL9iQKQ59VHNqrVAW7yuKT4PF"
+    },
+    {
+      "name": "HObbit",
+      "from": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF",
+      "to": "CScS8ZNMWv2frehdakLUHu3vrEQPqbPhbTfttbZ73CFNqF"
+    },
+    {
+      "name": "FL1T",
+      "from": "CSZ56vOh8aQhOYEmULHCSVfuEwf2Q6m2m8FB2wUsNcjGwO",
+      "to": "CSesjyScFjmSVi24faEDevvB8S27Pz6bmH6Go5F4ZZKGih"
+    },
+    {
+      "name": "Jame",
+      "from": "CSfAeEybyvZHSw9d93F6v6NDtfqPWabYmqaoDBEkLk7ikX",
+      "to": "CScCb7CCdtOYOiOULuKo5S2wAnEXwmoY4BdBrzGdQyBHmV"
+    },
+    {
+      "name": "xiELO",
+      "from": "CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF",
+      "to": "CSOdVtE9ftvU6w9HKf6VyMMXCL9EAKWutNTNSoYsDeOSrB"
+    },
+    {
+      "name": "zweih",
+      "from": "CS28nMFPARkutpD2cLnT9rVnrYUmYiuVwFCY5cRQOAh3HB",
+      "to": "CScHqTpfzxcVthwvQWd87SLCVphnpeXcSqHCEHsJ48C6Xm"
+    },
+    {
+      "name": "susp",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
+      "to": "CSkuPBT32huVamMRuTSR6JDVYunDMrVTShBZpLsnqw3EJf"
+    },
+    {
+      "name": "MartinezSa",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
+      "to": "CSvA37Mou5tyXnWY3mN5u6UpZsmo8ryb5XW8b4wJdmsO3Z"
+    },
+    {
+      "name": "Chr1zN",
+      "from": "CSfbnhxt9fzTqqhRLCsziZEpJJLEUtzMrcfCHaSWSojiyE",
+      "to": "CSZY9jmdrdXJZpzhpqsCFwHWtj58spe8tGCjvdAUrA5PVQ"
     }
   ],
   "migrated": 0,
@@ -50,6 +85,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-14T23:09:22.141Z",
-  "durationMs": 312131
+  "updatedAt": "2026-11-15T23:29:28.038Z",
+  "durationMs": 263217
 }

@@ -1,26 +1,33 @@
 # 数据更新报告
 
-- 更新时间：2026/11/14 23:09:22
+- 更新时间：2026/11/15 23:29:28
 - 数据源：prosettings.net
 - 结果：**30 支战队 / 149 名选手**（含历史记录 149 人）
 - 准星码格式（cs2-v1）：新格式页面 149 人 · 旧格式页面 0 人
-- 用时：312 秒
+- 用时：263 秒
 
 ## 选手变动
 
 - 新增 0 名
 - 移除 0 名
-- 准星变动 7 名
+- 准星变动 14 名
 
 | 选手 | 原分享码 | 新分享码 |
 | --- | --- | --- |
-| NiKo | CSvTbp5FWLhB7aSh5xhKD68fk6wtrwXURGZOBaFG4GCEZB | CSdYX5OLjVJaDjkDoThW29XHWX6Br7UwXKadAYmwi37QSb |
-| kyousuke | CSdYX5OLjVJaDjkDoThW29XHWX6Br7UwXKadAYmwi37QSb | CS2FiEE2R8adYwabVpOWsYLQUnGORd6o2A7PZbeiLZKGhF |
-| magixx | CSTcPpGs7aDcTZn6HeSfwpdCUN4cB5QnJUE32hwVEqWqCV | CS7OUHLFkK5XZqANxWHXh4tKymopbbFjjPwO2veyqEOPLX |
-| donk | CSGNEeqn4GjWExbuYBxJPx5DsYYqONGV7S3jWGvCB6zeGG | CSdpH9aUv4mNAWc2hfAOdTrJ8J6H6HUFuvWxYMZXshvmPG |
-| YEKINDAR | CSwz2idaYtssLCHHzPDcNKvBdUXWjGYjVm4DyrfWVCYETY | CSkwLNbarFnV4awzpf5jvZbczXuc7LbNTVGykeAQoWTcuU |
-| kscerato | CSLC2GGwsjZOZFWe6UGbx6PDQpACsuk2bpErqvvF7eQNjc | CSzOpAncxhR7LGNnyKpJZSQvw4qOqbPhbTfttbZ73CFNqF |
-| molodoy | CSkEEut83SiR87Ksr2LuvHVPcTtCfWtjtMOfdXsfxtqpzA | CSNSkVknOKVLdFOFQ7dME4V94Z5pa66jnOQj4HOWJvbUHD |
+| magixx | CS7OUHLFkK5XZqANxWHXh4tKymopbbFjjPwO2veyqEOPLX | CSrPSxt5uXMdtRu5jqcpCUaPxL5JTdt55cBZVxRftokBvS |
+| YEKINDAR | CSkwLNbarFnV4awzpf5jvZbczXuc7LbNTVGykeAQoWTcuU | CSWqTS82CKFA5O75birJv2AKMErQJpp9PTDyDJt6FTB72a |
+| kscerato | CSzOpAncxhR7LGNnyKpJZSQvw4qOqbPhbTfttbZ73CFNqF | CSdpH9aUv4mNAWc2hfAOdTrJ8J6H6HUFuvWxYMZXshvmPG |
+| frozen | CSXhYcRknnJRNRipQDscrX69AjRiaTuveQmT6XFOvWmvAc | CSM9yeif5somwBWXz5xPknj5SjSSH6vKEODqo6d4eWmv9A |
+| jcobbb | CSB5pEFO4q5FdvMsAMWeLp5sUZxwcB9iAKJRQqS9xnd4Jc | CS7YGNU6jsStqoc6xkYnkbrS8sES8aZ8L8bpnDL9sf7U8m |
+| JBOEN | CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF | CSj8rxDydSJxjXXawV2F3SL9iQKQ59VHNqrVAW7yuKT4PF |
+| HObbit | CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF | CScS8ZNMWv2frehdakLUHu3vrEQPqbPhbTfttbZ73CFNqF |
+| FL1T | CSZ56vOh8aQhOYEmULHCSVfuEwf2Q6m2m8FB2wUsNcjGwO | CSesjyScFjmSVi24faEDevvB8S27Pz6bmH6Go5F4ZZKGih |
+| Jame | CSfAeEybyvZHSw9d93F6v6NDtfqPWabYmqaoDBEkLk7ikX | CScCb7CCdtOYOiOULuKo5S2wAnEXwmoY4BdBrzGdQyBHmV |
+| xiELO | CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF | CSOdVtE9ftvU6w9HKf6VyMMXCL9EAKWutNTNSoYsDeOSrB |
+| zweih | CS28nMFPARkutpD2cLnT9rVnrYUmYiuVwFCY5cRQOAh3HB | CScHqTpfzxcVthwvQWd87SLCVphnpeXcSqHCEHsJ48C6Xm |
+| susp | CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF | CSkuPBT32huVamMRuTSR6JDVYunDMrVTShBZpLsnqw3EJf |
+| MartinezSa | CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF | CSvA37Mou5tyXnWY3mN5u6UpZsmo8ryb5XW8b4wJdmsO3Z |
+| Chr1zN | CSfbnhxt9fzTqqhRLCsziZEpJJLEUtzMrcfCHaSWSojiyE | CSZY9jmdrdXJZpzhpqsCFwHWtj58spe8tGCjvdAUrA5PVQ |
 
 ## 抓取失败 / 无准星数据
 
