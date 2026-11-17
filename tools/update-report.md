@@ -1,33 +1,23 @@
 # 数据更新报告
 
-- 更新时间：2026/11/15 23:29:28
+- 更新时间：2026/11/17 02:33:16
 - 数据源：prosettings.net
 - 结果：**30 支战队 / 149 名选手**（含历史记录 149 人）
 - 准星码格式（cs2-v1）：新格式页面 149 人 · 旧格式页面 0 人
-- 用时：263 秒
+- 用时：190 秒
 
 ## 选手变动
 
 - 新增 0 名
 - 移除 0 名
-- 准星变动 14 名
+- 准星变动 4 名
 
 | 选手 | 原分享码 | 新分享码 |
 | --- | --- | --- |
-| magixx | CS7OUHLFkK5XZqANxWHXh4tKymopbbFjjPwO2veyqEOPLX | CSrPSxt5uXMdtRu5jqcpCUaPxL5JTdt55cBZVxRftokBvS |
-| YEKINDAR | CSkwLNbarFnV4awzpf5jvZbczXuc7LbNTVGykeAQoWTcuU | CSWqTS82CKFA5O75birJv2AKMErQJpp9PTDyDJt6FTB72a |
-| kscerato | CSzOpAncxhR7LGNnyKpJZSQvw4qOqbPhbTfttbZ73CFNqF | CSdpH9aUv4mNAWc2hfAOdTrJ8J6H6HUFuvWxYMZXshvmPG |
-| frozen | CSXhYcRknnJRNRipQDscrX69AjRiaTuveQmT6XFOvWmvAc | CSM9yeif5somwBWXz5xPknj5SjSSH6vKEODqo6d4eWmv9A |
-| jcobbb | CSB5pEFO4q5FdvMsAMWeLp5sUZxwcB9iAKJRQqS9xnd4Jc | CS7YGNU6jsStqoc6xkYnkbrS8sES8aZ8L8bpnDL9sf7U8m |
-| JBOEN | CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF | CSj8rxDydSJxjXXawV2F3SL9iQKQ59VHNqrVAW7yuKT4PF |
-| HObbit | CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF | CScS8ZNMWv2frehdakLUHu3vrEQPqbPhbTfttbZ73CFNqF |
-| FL1T | CSZ56vOh8aQhOYEmULHCSVfuEwf2Q6m2m8FB2wUsNcjGwO | CSesjyScFjmSVi24faEDevvB8S27Pz6bmH6Go5F4ZZKGih |
-| Jame | CSfAeEybyvZHSw9d93F6v6NDtfqPWabYmqaoDBEkLk7ikX | CScCb7CCdtOYOiOULuKo5S2wAnEXwmoY4BdBrzGdQyBHmV |
-| xiELO | CSiuObDzWBiXvWXr8UJU5TLsmhBNMJMBaH5AjAS63CFNqF | CSOdVtE9ftvU6w9HKf6VyMMXCL9EAKWutNTNSoYsDeOSrB |
-| zweih | CS28nMFPARkutpD2cLnT9rVnrYUmYiuVwFCY5cRQOAh3HB | CScHqTpfzxcVthwvQWd87SLCVphnpeXcSqHCEHsJ48C6Xm |
-| susp | CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF | CSkuPBT32huVamMRuTSR6JDVYunDMrVTShBZpLsnqw3EJf |
-| MartinezSa | CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF | CSvA37Mou5tyXnWY3mN5u6UpZsmo8ryb5XW8b4wJdmsO3Z |
-| Chr1zN | CSfbnhxt9fzTqqhRLCsziZEpJJLEUtzMrcfCHaSWSojiyE | CSZY9jmdrdXJZpzhpqsCFwHWtj58spe8tGCjvdAUrA5PVQ |
+| HObbit | CScS8ZNMWv2frehdakLUHu3vrEQPqbPhbTfttbZ73CFNqF | CSmK2oG5CifQVSZrK2JiAaGrR9QkLAhwEuDtMVPFtYZVJe |
+| Jame | CScCb7CCdtOYOiOULuKo5S2wAnEXwmoY4BdBrzGdQyBHmV | CS9YDCVv7o5V8d33pDyyzPmYMEf6YtwdXnqzo8wHW7mLXJ |
+| xiELO | CSOdVtE9ftvU6w9HKf6VyMMXCL9EAKWutNTNSoYsDeOSrB | CS6W23zTVfwfvUe6G5KOrvfjRPLrdx4xiveWmzotkixfHi |
+| susp | CSkuPBT32huVamMRuTSR6JDVYunDMrVTShBZpLsnqw3EJf | CSibkfXWB8dfJonRCNJnddy5tDhWjfKXzAJFdRMuxpoXif |
 
 ## 抓取失败 / 无准星数据
 
