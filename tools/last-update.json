@@ -9,23 +9,18 @@
   "changedCrosshairs": [
     {
       "name": "blameF",
-      "from": "CSMhoY4nFB64Yrrxir8OKvJUmFrJLsfQkPoFZ7MRACUAVR",
-      "to": "CSWAGrVzoDwYWwKSwT9ARPCnV8EPyHcoiiXhRYHspJMTsc"
-    },
-    {
-      "name": "hypex",
-      "from": "CShb3HkrL3NisY6U84CasA7TTkWTk5ZtdQH4JSuxLXAmHC",
-      "to": "CSyLLRG2cYYNSDGRJJkWk9kAY4jUjXd6VfwO9drjuMcXpJ"
+      "from": "CSWAGrVzoDwYWwKSwT9ARPCnV8EPyHcoiiXhRYHspJMTsc",
+      "to": "CSpyvNTU8n7XfDtwjWvk9Hk96GisAXu5XOedd74EXvGZ2c"
     },
     {
       "name": "Krimbo",
-      "from": "CSs9GeA3j97jjB3q8krHEyjqYNQwjfUZymaRKEtjtUGWTX",
-      "to": "CSYoQsrcUUNz8pVMsYTiL39UHL6x9xZwiRGG997JVFQKCX"
+      "from": "CSYoQsrcUUNz8pVMsYTiL39UHL6x9xZwiRGG997JVFQKCX",
+      "to": "CSAT9oHwRjwtRwnbXiF3wEVccNy3mPWPYC4rffcRxvzKQE"
     },
     {
       "name": "adamb",
-      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
-      "to": "CSDyKOW5aMROrbc4kOFiASrEhTVKrKGVzBqyysMuZLrsXG"
+      "from": "CSDyKOW5aMROrbc4kOFiASrEhTVKrKGVzBqyysMuZLrsXG",
+      "to": "CSKrB87XmFOtWPPC2cYyAujLsERXMnkFjXQ4Hfq5co3sRd"
     }
   ],
   "migrated": 0,
@@ -35,6 +30,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-19T01:20:49.238Z",
-  "durationMs": 231795
+  "updatedAt": "2026-11-20T01:23:44.683Z",
+  "durationMs": 221128
 }
