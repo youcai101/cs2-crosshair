@@ -6,23 +6,7 @@
   "addedTeams": [],
   "addedPlayers": [],
   "removedPlayers": [],
-  "changedCrosshairs": [
-    {
-      "name": "blameF",
-      "from": "CSWAGrVzoDwYWwKSwT9ARPCnV8EPyHcoiiXhRYHspJMTsc",
-      "to": "CSpyvNTU8n7XfDtwjWvk9Hk96GisAXu5XOedd74EXvGZ2c"
-    },
-    {
-      "name": "Krimbo",
-      "from": "CSYoQsrcUUNz8pVMsYTiL39UHL6x9xZwiRGG997JVFQKCX",
-      "to": "CSAT9oHwRjwtRwnbXiF3wEVccNy3mPWPYC4rffcRxvzKQE"
-    },
-    {
-      "name": "adamb",
-      "from": "CSDyKOW5aMROrbc4kOFiASrEhTVKrKGVzBqyysMuZLrsXG",
-      "to": "CSKrB87XmFOtWPPC2cYyAujLsERXMnkFjXQ4Hfq5co3sRd"
-    }
-  ],
+  "changedCrosshairs": [],
   "migrated": 0,
   "newFormat": 149,
   "legacyFormat": 0,
@@ -30,6 +14,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-20T01:23:44.683Z",
-  "durationMs": 221128
+  "updatedAt": "2026-11-21T00:54:25.027Z",
+  "durationMs": 195547
 }
