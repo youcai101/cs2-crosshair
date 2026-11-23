@@ -6,7 +6,13 @@
   "addedTeams": [],
   "addedPlayers": [],
   "removedPlayers": [],
-  "changedCrosshairs": [],
+  "changedCrosshairs": [
+    {
+      "name": "max",
+      "from": "CSkEEut83SiR87Ksr2LuvHVPcTtCfWtjtMOfdXsfxtqpzA",
+      "to": "CSYXdHzM7U3A4KUYKi7QaCCoYNCO3ObvEMw86Di4co3sRd"
+    }
+  ],
   "migrated": 0,
   "newFormat": 149,
   "legacyFormat": 0,
@@ -14,6 +20,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-21T23:54:30.645Z",
-  "durationMs": 197776
+  "updatedAt": "2026-11-23T00:24:28.754Z",
+  "durationMs": 200744
 }
