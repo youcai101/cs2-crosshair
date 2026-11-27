@@ -9,63 +9,48 @@
   "changedCrosshairs": [
     {
       "name": "dgt",
-      "from": "CSiqdDO8CtBORNwHNSpDNnXjfGMCvefRVpuAjSHCOCrWhE",
-      "to": "CSjXo7BW2vFfcKQHyr8JrzF2veDHY4ESmXHZN7XKRe3Wab"
-    },
-    {
-      "name": "jcobbb",
-      "from": "CSuckMRQtLj5UUzfFzNNR93asEKGbde6McX5JtEJOHE37H",
-      "to": "CSC6ezAOXQSejRKRHpBwPtDSFY7ot9AtVCkK2xH6xw4pzA"
+      "from": "CSjXo7BW2vFfcKQHyr8JrzF2veDHY4ESmXHZN7XKRe3Wab",
+      "to": "CScMrY46GdNQmN3ZvGdKEPWa6P4OGDHb4sHqPXhzhDcCyG"
     },
     {
       "name": "HObbit",
-      "from": "CSYaOpW2OphBCb8vZyLPEExFBi54J2sfCTVxCNebq25VZA",
-      "to": "CSF68EZcNUK2tnJpxOs4a6YRNmBNMJMBaH5AjAS63CFNqF"
+      "from": "CSF68EZcNUK2tnJpxOs4a6YRNmBNMJMBaH5AjAS63CFNqF",
+      "to": "CSSTHp86Bio65tsi8mC5AEBRwoBRT8pAx9RzTW2NcwOAYF"
     },
     {
       "name": "xiELO",
-      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
-      "to": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF"
+      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
+      "to": "CSzqKtTjZSPiiFTfs78PtLwEmezhvJsiz3BymiLcDhXwGF"
     },
     {
       "name": "zweih",
-      "from": "CSQsTjQLODoaQOGSu2C6AJH2bGQVjAji635m2LSSC6zeGG",
-      "to": "CSzrKbuq3hojokeQB7E4FQ4u7ksFyXoRzhQ9yM5oQjMWQj"
+      "from": "CSzrKbuq3hojokeQB7E4FQ4u7ksFyXoRzhQ9yM5oQjMWQj",
+      "to": "CS7HwXQESEGwSyTfwuwpU8WvcOcbseknvEEQntMuZLrsXG"
+    },
+    {
+      "name": "EliGE",
+      "from": "CSvNakNXdDhUOyH2FvqenD9my7jfWYsNUqONKA9FQ8ABhm",
+      "to": "CSCB5iAWxudyYWuvJQcdj2sf6OXesJSQ9MFzthpzpN2Nym"
     },
     {
       "name": "malbsMd",
-      "from": "CSheQKjUqxzwTsCLGi5Kekw49nKznO9GHa2R9Xmwi37QSb",
-      "to": "CSsSeQBNRErBhOkVKT4Sm8xG3ejLYa5ozGH67zAHH7PxLV"
+      "from": "CSsSeQBNRErBhOkVKT4Sm8xG3ejLYa5ozGH67zAHH7PxLV",
+      "to": "CSr6JrLkP4v2iyDfKXHq5phEdi6899Whcqq4WTTyWncaNP"
+    },
+    {
+      "name": "JT",
+      "from": "CSrDycrTddKCY3JrMUMXdrVKkcFqzSzReEpz2AVTHOk8NN",
+      "to": "CSErJeDuKJcLOA6T49Lsk5cM2s3Wb8nCG5YVYzJYPGWRoN"
     },
     {
       "name": "Jorko",
-      "from": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF",
-      "to": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF"
-    },
-    {
-      "name": "susp",
-      "from": "CSwbqnLQs38P3bKYjbyCojVvOMGrD2OXmAWhtpnCvFRm8k",
-      "to": "CSL7p8xW2ib2XyW6oYMCGQBXNfOpGY2JvZB6WSVvXb8pqj"
-    },
-    {
-      "name": "Westmelon",
-      "from": "CS4vKOJOpFh8fSvXYjGqfwUDwdZtxj2tZRcEqOyC9MHcYj",
-      "to": "CSeEorPhbPSLxrcrApwReyVK5N2KZKVzw26C32PuXb8pqj"
-    },
-    {
-      "name": "C4LLM3SU3",
-      "from": "CSoNuGN4qf66PBSjSOT7tzJbTzPMF2UjUQtTV94ozddwYC",
-      "to": "CSPE8KfDXhc2Vq3jkHzBidffJnvr4kDTekmWJaHSJ3iqQC"
-    },
-    {
-      "name": "JBa",
-      "from": "CSytvhGfaMFpAcQu8WUM2TqRf5SunXUN7HiK7V7yuKT4PF",
+      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
       "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
     },
     {
-      "name": "nettik",
-      "from": "CSOrscXLqUUwGpNt8p2NpxC2CoNqWXcRQwB8vhESkpATyF",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
+      "name": "s1n",
+      "from": "CSZC4snxBRqYe2PNRkbpjcqRdwXEcahLvu99AJOWJvbUHD",
+      "to": "CSa8nB8e9amwW6OhPU5a36QkRU58fiuuaxuqEqHSi7QQHj"
     }
   ],
   "migrated": 0,
@@ -75,6 +60,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-26T02:20:07.542Z",
-  "durationMs": 163996
+  "updatedAt": "2026-11-27T02:21:27.123Z",
+  "durationMs": 227471
 }
