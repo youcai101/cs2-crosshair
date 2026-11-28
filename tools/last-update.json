@@ -8,49 +8,9 @@
   "removedPlayers": [],
   "changedCrosshairs": [
     {
-      "name": "dgt",
-      "from": "CSjXo7BW2vFfcKQHyr8JrzF2veDHY4ESmXHZN7XKRe3Wab",
-      "to": "CScMrY46GdNQmN3ZvGdKEPWa6P4OGDHb4sHqPXhzhDcCyG"
-    },
-    {
-      "name": "HObbit",
-      "from": "CSF68EZcNUK2tnJpxOs4a6YRNmBNMJMBaH5AjAS63CFNqF",
-      "to": "CSSTHp86Bio65tsi8mC5AEBRwoBRT8pAx9RzTW2NcwOAYF"
-    },
-    {
-      "name": "xiELO",
-      "from": "CSEdromTGM7ij4BWeDiWRhvP5pGSYTZoO3TFLyE2uKT4PF",
-      "to": "CSzqKtTjZSPiiFTfs78PtLwEmezhvJsiz3BymiLcDhXwGF"
-    },
-    {
-      "name": "zweih",
-      "from": "CSzrKbuq3hojokeQB7E4FQ4u7ksFyXoRzhQ9yM5oQjMWQj",
-      "to": "CS7HwXQESEGwSyTfwuwpU8WvcOcbseknvEEQntMuZLrsXG"
-    },
-    {
-      "name": "EliGE",
-      "from": "CSvNakNXdDhUOyH2FvqenD9my7jfWYsNUqONKA9FQ8ABhm",
-      "to": "CSCB5iAWxudyYWuvJQcdj2sf6OXesJSQ9MFzthpzpN2Nym"
-    },
-    {
-      "name": "malbsMd",
-      "from": "CSsSeQBNRErBhOkVKT4Sm8xG3ejLYa5ozGH67zAHH7PxLV",
-      "to": "CSr6JrLkP4v2iyDfKXHq5phEdi6899Whcqq4WTTyWncaNP"
-    },
-    {
-      "name": "JT",
-      "from": "CSrDycrTddKCY3JrMUMXdrVKkcFqzSzReEpz2AVTHOk8NN",
-      "to": "CSErJeDuKJcLOA6T49Lsk5cM2s3Wb8nCG5YVYzJYPGWRoN"
-    },
-    {
-      "name": "Jorko",
-      "from": "CSb7uHXB989YebCcoiuafDiUKZntFPoXCVySN5sMcwOAYF",
-      "to": "CSqvLJtn4UrvzStpGJP9PjwVCYhsA44tkbwDWbeiLZKGhF"
-    },
-    {
       "name": "s1n",
-      "from": "CSZC4snxBRqYe2PNRkbpjcqRdwXEcahLvu99AJOWJvbUHD",
-      "to": "CSa8nB8e9amwW6OhPU5a36QkRU58fiuuaxuqEqHSi7QQHj"
+      "from": "CSa8nB8e9amwW6OhPU5a36QkRU58fiuuaxuqEqHSi7QQHj",
+      "to": "CSmDyVR9TFSJUW89ucqRUzN74bDccMk2THYKBVEYcsMsGm"
     }
   ],
   "migrated": 0,
@@ -60,6 +20,6 @@
   "failed": [
     "Tatu"
   ],
-  "updatedAt": "2026-11-27T02:21:27.123Z",
-  "durationMs": 227471
+  "updatedAt": "2026-11-28T02:06:00.977Z",
+  "durationMs": 221055
 }
